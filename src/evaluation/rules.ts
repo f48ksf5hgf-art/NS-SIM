@@ -9,9 +9,9 @@
  */
 import { formatElapsed } from '../game/engine';
 import type { GuardActionType, SimEvent, ZoneId } from '../game/types';
-import type { CategoryId, Evidence, RuleJudgement, SafetyViolation } from './types';
+import type { CallAssessment, CategoryId, Evidence, RuleJudgement, SafetyViolation } from './types';
 
-export const RULES_VERSION = 'scenario-01/1.0.0';
+export const RULES_VERSION = 'scenario-01/1.1.0';
 
 export const CATEGORIES: { id: CategoryId; label: string; maxPoints: number }[] = [
   { id: 'safety', label: '安全管理', maxPoints: 30 },
@@ -26,6 +26,20 @@ export const MIN_ASSESSED_POINTS = 60;
 
 /** 火災判断からこの秒数を超えて通報・避難措置がない場合は重大な安全違反 */
 export const CRITICAL_DELAY_SECONDS = 180;
+
+/**
+ * 119番通報の時間基準（NS-SIM 独自の訓練基準）：火災確認からの遅れ [秒, 得点]。
+ * 最終段階を超えた通報も「遅延」として1点を与え、未実施（0点）と区別する。
+ */
+export const CALL_TIERS: [number, number][] = [
+  [60, 10],
+  [120, 6],
+  [240, 3],
+];
+export const CALL_LATE_POINTS = 1;
+
+/** 火災確認後、通報せずに状況終了した場合に「未実施」と判定できる最短の判断時間（秒） */
+export const CALL_MIN_DECISION_SECONDS = 30;
 
 type Ev<T extends SimEvent['type']> = Extract<SimEvent, { type: T }>;
 
@@ -154,6 +168,98 @@ function guardLabel(ctx: EvalContext, id: string): string {
 }
 
 // ---------------------------------------------------------------------------
+// 119番通報
+
+/**
+ * 火災確認から119番通報までを評価する。初期消火の成否は通報の評価に影響させない
+ * （NS-SIM の訓練基準では、初期消火と並行して通報することを求める）。
+ */
+export function assessEmergencyCall(ctx: EvalContext): CallAssessment {
+  const maxPoints = 10;
+  const confirmed = ctx.events.find((e) => e.type === 'fire_confirmed') ?? null;
+  const call = ctx.events.find((e) => e.type === 'call_119') ?? null;
+  const base = {
+    maxPoints,
+    confirmed: confirmed ? ev(confirmed, '火災確認の報告') : null,
+    called: call ? ev(call, '119番通報') : null,
+    ended: ctx.ended ? ev(ctx.ended, '状況終了') : null,
+    extinguishedByGuard: ctx.ended?.extinguishedBy === 'guard',
+    observedSeconds: confirmed ? ctx.observedUntil - confirmed.time : null,
+  };
+  const evidence = [base.confirmed, base.called, base.ended].filter((e): e is Evidence => e !== null);
+  const make = (
+    verdict: CallAssessment['verdict'],
+    judgement: RuleJudgement,
+    delaySeconds: number | null,
+  ): CallAssessment => ({ ...base, ...judgement, verdict, delaySeconds });
+
+  if (!confirmed) {
+    if (call) {
+      return make('before_confirmation', judged(maxPoints, maxPoints, '現場での火災確認より前に通報', evidence), 0);
+    }
+    if (!ctx.complete) {
+      return make(
+        'undeterminable',
+        excluded('undeterminable', '記録が途切れており、火災確認・通報の有無を判定できない'),
+        null,
+      );
+    }
+    return make(
+      'not_required',
+      excluded('not_applicable', '火災が確認されていないため、通報の有無だけでは評価しない', evidence),
+      null,
+    );
+  }
+
+  if (call) {
+    const delay = call.time - confirmed.time;
+    if (delay <= 0) {
+      return make('before_confirmation', judged(maxPoints, maxPoints, '火災確認の報告より前に通報', evidence), 0);
+    }
+    const points = tierPoints(delay, CALL_TIERS) || CALL_LATE_POINTS;
+    const limit = CALL_TIERS[0][0];
+    return make(
+      delay <= limit ? 'on_time' : 'delayed',
+      judged(
+        points,
+        maxPoints,
+        delay <= limit
+          ? `火災確認から${delay}秒後に通報`
+          : `通報遅延：火災確認から${delay}秒後に通報（基準${limit}秒以内）`,
+        evidence,
+      ),
+      delay,
+    );
+  }
+
+  // 通報なし：終了（または記録終了）までに判断できた時間で評価する
+  const observed = base.observedSeconds!;
+  const enough = ctx.complete ? observed >= CALL_MIN_DECISION_SECONDS : observed > CALL_TIERS[CALL_TIERS.length - 1][0];
+  if (!enough) {
+    return make(
+      'undeterminable',
+      excluded(
+        'undeterminable',
+        `火災確認から${ctx.complete ? '状況終了' : '記録終了'}まで${observed}秒で、通報の判断時間が不足`,
+        evidence,
+      ),
+      null,
+    );
+  }
+  const suffix = base.extinguishedByGuard ? '（初期消火に成功しても通報は必要）' : '';
+  return make(
+    'not_called',
+    judged(
+      0,
+      maxPoints,
+      `通報未実施：火災確認から${ctx.complete ? '状況終了' : '記録終了'}まで${observed}秒、通報なし${suffix}`,
+      evidence,
+    ),
+    null,
+  );
+}
+
+// ---------------------------------------------------------------------------
 // 重大な安全違反
 
 export function findViolations(ctx: EvalContext): SafetyViolation[] {
@@ -199,6 +305,21 @@ export function findViolations(ctx: EvalContext): SafetyViolation[] {
         title: '119番通報の重大な遅れ',
         detail: `${decisionLabel(dp)}から${CRITICAL_DELAY_SECONDS}秒以上、119番通報が行われなかった`,
         evidence: [ev(dp, decisionLabel(dp)), ...(call ? [ev(call, '119番通報')] : [])],
+      });
+    }
+  }
+
+  // V3: 火災を確認したまま通報せずに状況終了（早期の初期消火で上記の期限前に終わった場合も含む）
+  if (!violations.some((v) => v.violationId === 'V3')) {
+    const assessment = assessEmergencyCall(ctx);
+    if (assessment.verdict === 'not_called' && ctx.complete) {
+      violations.push({
+        violationId: 'V3',
+        title: '火災確認後の119番通報の未実施',
+        detail: `火災確認から状況終了まで${assessment.observedSeconds}秒、119番通報が行われなかった${
+          assessment.extinguishedByGuard ? '（初期消火の成功で通報が不要になるわけではない）' : ''
+        }`,
+        evidence: assessment.evidence,
       });
     }
   }
@@ -306,20 +427,10 @@ export const RULES: RuleDefinition[] = [
     category: 'initial',
     title: '119番通報',
     maxPoints: 10,
-    goal: '火災の確認・第2報を受けたら60秒以内に119番通報する（確認前の通報も可）',
+    goal: '火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）',
     judge: (ctx) => {
-      if (!ctx.decisionPoint) return noDecisionPoint(ctx);
-      return timed(
-        ctx,
-        10,
-        { event: ctx.decisionPoint, label: decisionLabel(ctx.decisionPoint) },
-        { event: ctx.events.find((e) => e.type === 'call_119'), label: '119番通報' },
-        [
-          [60, 10],
-          [120, 6],
-          [240, 3],
-        ],
-      );
+      const { status, points, detail, evidence } = assessEmergencyCall(ctx);
+      return { status, points, detail, evidence };
     },
   },
   {

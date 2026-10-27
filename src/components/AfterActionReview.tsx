@@ -2,7 +2,15 @@ import { formatClock, formatElapsed } from '../game/engine';
 import { SCENARIO } from '../game/scenario';
 import { OUTCOME_LABELS } from '../evaluation/evaluate';
 import { compareWithHistory, type HistoryEntry } from '../evaluation/storage';
-import type { Evidence, EvaluationResult, RuleResult, RuleStatus } from '../evaluation/types';
+import { CALL_TIERS } from '../evaluation/rules';
+import type {
+  CallAssessment,
+  CallVerdict,
+  Evidence,
+  EvaluationResult,
+  RuleResult,
+  RuleStatus,
+} from '../evaluation/types';
 
 interface Props {
   result: EvaluationResult;
@@ -21,6 +29,72 @@ const STATUS_LABELS: Record<RuleStatus, string> = {
   not_applicable: '対象外',
   undeterminable: '判定不能',
 };
+
+const CALL_VERDICT_LABELS: Record<CallVerdict, string> = {
+  before_confirmation: '確認前に通報',
+  on_time: '基準内に通報',
+  delayed: '通報遅延',
+  not_called: '通報未実施',
+  not_required: '評価対象外',
+  undeterminable: '判定不能',
+};
+
+function evidenceTime(e: Evidence | null): string {
+  return e ? `#${e.eventId} ${formatClock(SCENARIO.startClock + e.time)}` : '—';
+}
+
+function EmergencyCallCard({ call }: { call: CallAssessment }) {
+  const excluded = call.status === 'not_applicable' || call.status === 'undeterminable';
+  return (
+    <section className={`aar-card aar-call aar-rule--${call.status}`} aria-labelledby="aar-call-title">
+      <h3 id="aar-call-title" className="aar-card__title">
+        119番通報の評価
+      </h3>
+      <div className="aar-rule__head">
+        <span className="aar-rule__status" data-testid="aar-call-verdict">
+          {CALL_VERDICT_LABELS[call.verdict]}
+        </span>
+        <span className="aar-rule__title">F2 119番通報</span>
+        <span className="aar-rule__points mono">
+          {excluded ? `—/${call.maxPoints}` : `${call.points}/${call.maxPoints}`}
+        </span>
+      </div>
+      <dl className="aar-call__facts">
+        <div>
+          <dt>火災確認</dt>
+          <dd className="mono">{call.confirmed ? evidenceTime(call.confirmed) : '確認なし'}</dd>
+        </div>
+        <div>
+          <dt>119番通報</dt>
+          <dd className="mono">{call.called ? evidenceTime(call.called) : '未実施'}</dd>
+        </div>
+        <div>
+          <dt>確認→通報</dt>
+          <dd className="mono">
+            {call.delaySeconds === null
+              ? '—'
+              : call.verdict === 'before_confirmation'
+                ? '確認前'
+                : `${call.delaySeconds}秒`}
+          </dd>
+        </div>
+        <div>
+          <dt>確認→終了</dt>
+          <dd className="mono">{call.observedSeconds === null ? '—' : `${call.observedSeconds}秒`}</dd>
+        </div>
+        <div>
+          <dt>初期消火</dt>
+          <dd>{call.extinguishedByGuard ? '成功（通報とは別に評価）' : 'なし'}</dd>
+        </div>
+      </dl>
+      <p className="aar-rule__detail">{call.detail}</p>
+      <p className="aar-empty">
+        時間基準（火災確認から{CALL_TIERS.map(([sec, pts]) => `${sec}秒以内${pts}点`).join('・')}
+        、それ以降の通報1点、未実施0点）はNS-SIM独自の訓練基準です。消防法令上の通報義務やその適否を判定するものではありません。
+      </p>
+    </section>
+  );
+}
 
 function signed(n: number): string {
   return n > 0 ? `+${n}` : String(n);
@@ -164,6 +238,8 @@ export function AfterActionReview({ result, history, currentId, saveError, onRep
                 </ul>
               )}
             </section>
+
+            <EmergencyCallCard call={result.emergencyCall} />
 
             <section className="aar-card" aria-labelledby="aar-goal-title">
               <h3 id="aar-goal-title" className="aar-card__title">

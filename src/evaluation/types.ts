@@ -53,6 +53,41 @@ export interface SafetyViolation {
   evidence: Evidence[];
 }
 
+/**
+ * 119番通報の判定
+ * - before_confirmation：現場での火災確認より前（または確認なし）に通報
+ * - on_time：火災確認から基準時間内に通報
+ * - delayed：基準時間を超えて通報（遅延）
+ * - not_called：火災確認後、状況終了まで通報なし（未実施）
+ * - not_required：火災が確認されておらず、通報の有無では評価しない
+ * - undeterminable：記録不足・判断時間不足で判定できない
+ */
+export type CallVerdict =
+  | 'before_confirmation'
+  | 'on_time'
+  | 'delayed'
+  | 'not_called'
+  | 'not_required'
+  | 'undeterminable';
+
+/** 119番通報の評価根拠（F2 の判定と AAR 画面の表示に用いる） */
+export interface CallAssessment extends RuleJudgement {
+  verdict: CallVerdict;
+  maxPoints: number;
+  /** 火災確認の報告 */
+  confirmed: Evidence | null;
+  /** 119番通報 */
+  called: Evidence | null;
+  /** 状況終了 */
+  ended: Evidence | null;
+  /** 火災確認から通報までの秒数（確認前の通報は 0、通報なしは null） */
+  delaySeconds: number | null;
+  /** 火災確認から状況終了（終了の記録がなければ最終記録）までの秒数 */
+  observedSeconds: number | null;
+  /** 警備員の初期消火で鎮火したか */
+  extinguishedByGuard: boolean;
+}
+
 export type TrainingOutcome = 'extinguished_by_guard' | 'extinguished_by_fire_department' | 'fire_spread' | 'unknown';
 
 export interface TimelineItem {
@@ -81,6 +116,8 @@ export interface EvaluationResult {
   improvements: RuleResult[];
   undetermined: RuleResult[];
   violations: SafetyViolation[];
+  /** 119番通報の評価根拠 */
+  emergencyCall: CallAssessment;
   /** 状況終了までの経過秒数（記録がなければ最終イベント時刻） */
   elapsedSeconds: number;
   outcome: TrainingOutcome;

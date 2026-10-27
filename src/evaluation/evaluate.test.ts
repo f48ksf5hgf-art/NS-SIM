@@ -111,15 +111,98 @@ describe('119番通報が未実施の場合', () => {
     expect(['C', 'D']).toContain(r.rank);
   });
 
-  it('通報の判定期限前に初期消火で終了した場合は、成功にも失敗にもせず判定不能とする', () => {
+  it('初期消火の早期成功で終了しても通報評価を除外せず、未実施として評価する', () => {
     const s = play(assign('g1', 'investigate', 'D'), tick(90), assign('g1', 'extinguish', 'D'), tick(100));
     const r = evaluateEvents(s.events);
     expect(s.outcome).toBe('resolved');
-    expect(rule(r, 'F2').status).toBe('undeterminable');
+    expect(rule(r, 'F2').status).toBe('fail');
     expect(rule(r, 'F2').points).toBe(0);
-    expect(r.undetermined.map((x) => x.ruleId)).toContain('F2');
-    expect(r.improvements.map((x) => x.ruleId)).not.toContain('F2');
-    expect(r.goodDecisions.map((x) => x.ruleId)).not.toContain('F2');
+    expect(r.emergencyCall.verdict).toBe('not_called');
+    expect(r.undetermined.map((x) => x.ruleId)).not.toContain('F2');
+    expect(r.improvements.map((x) => x.ruleId)).toContain('F2');
+  });
+});
+
+describe('119番通報の評価（火災確認からの経過時間）', () => {
+  const confirmedAt = (s: GameState) => s.events.find((e) => e.type === 'fire_confirmed')!;
+
+  it('早期の初期消火成功でも、通報しなければ未実施・重大な安全違反となり高ランクにならない', () => {
+    const s = play(assign('g1', 'extinguish', 'D'), { type: 'ANNOUNCE' }, assign('g2', 'evacuate', 'B'), tick(600));
+    const r = evaluateEvents(s.events);
+    expect(r.outcome).toBe('extinguished_by_guard');
+    expect(r.emergencyCall).toMatchObject({
+      verdict: 'not_called',
+      status: 'fail',
+      points: 0,
+      delaySeconds: null,
+      observedSeconds: s.time - confirmedAt(s).time,
+      extinguishedByGuard: true,
+    });
+    const v3 = r.violations.find((v) => v.violationId === 'V3');
+    expect(v3?.title).toBe('火災確認後の119番通報の未実施');
+    expect(['C', 'D']).toContain(r.rank);
+    // 初期消火（鎮火）は通報とは独立して評価される
+    expect(rule(r, 'R1').status).toBe('pass');
+  });
+
+  it('初期消火と並行して基準時間内に通報すれば満点で、違反にならない', () => {
+    const s = play(assign('g1', 'extinguish', 'D'), { type: 'ANNOUNCE' }, tick(80), { type: 'CALL_119' }, tick(600));
+    const r = evaluateEvents(s.events);
+    expect(r.emergencyCall).toMatchObject({ verdict: 'on_time', points: 10, delaySeconds: 80 - confirmedAt(s).time });
+    expect(r.violations.filter((v) => v.violationId === 'V3')).toEqual([]);
+  });
+
+  it('通報の遅延は経過時間に応じて段階的に減点し、未実施（0点）と区別する', () => {
+    const withDelay = (d: number) => {
+      const s = play(assign('g1', 'investigate', 'D'), tick(90 + d), { type: 'CALL_119' }, tick(1000));
+      expect(confirmedAt(s).time).toBe(90);
+      return evaluateEvents(s.events).emergencyCall;
+    };
+    expect(withDelay(30)).toMatchObject({ verdict: 'on_time', points: 10, delaySeconds: 30 });
+    expect(withDelay(100)).toMatchObject({ verdict: 'delayed', status: 'partial', points: 6, delaySeconds: 100 });
+    expect(withDelay(200)).toMatchObject({ verdict: 'delayed', status: 'partial', points: 3, delaySeconds: 200 });
+    expect(withDelay(300)).toMatchObject({ verdict: 'delayed', status: 'partial', points: 1, delaySeconds: 300 });
+    const never = evaluateEvents(play(assign('g1', 'investigate', 'D'), tick(1000)).events).emergencyCall;
+    expect(never).toMatchObject({ verdict: 'not_called', status: 'fail', points: 0 });
+  });
+
+  it('火災確認前の通報は満点とする', () => {
+    const s = play({ type: 'CALL_119' }, assign('g1', 'investigate', 'D'), tick(600));
+    expect(evaluateEvents(s.events).emergencyCall).toMatchObject({
+      verdict: 'before_confirmation',
+      points: 10,
+      delaySeconds: 0,
+    });
+  });
+
+  it('火災が確認されない場合、通報の有無だけで減点しない', () => {
+    const r = evaluateEvents(play(tick(2000)).events);
+    expect(r.emergencyCall.verdict).toBe('not_required');
+    expect(rule(r, 'F2').status).toBe('not_applicable');
+    const called = evaluateEvents(play({ type: 'CALL_119' }, tick(600)).events);
+    expect(called.emergencyCall.verdict).toBe('before_confirmation');
+    expect(rule(called, 'F2').points).toBe(10);
+  });
+
+  it('記録が途中で途切れた場合は、判断できる時間があれば未実施、なければ判定不能', () => {
+    const events = play(assign('g1', 'investigate', 'D'), tick(500)).events.filter((e) => e.type !== 'scenario_ended');
+    const confirmed = events.find((e) => e.type === 'fire_confirmed')!;
+    const short = evaluateEvents(events.filter((e) => e.id <= confirmed.id));
+    expect(short.emergencyCall.verdict).toBe('undeterminable');
+    expect(rule(short, 'F2').status).toBe('undeterminable');
+    const long = evaluateEvents(events);
+    expect(long.emergencyCall.verdict).toBe('not_called');
+  });
+
+  it('通報の評価根拠は火災確認・通報・終了のイベントIDと時刻を参照する', () => {
+    const s = play(assign('g1', 'extinguish', 'D'), tick(80), { type: 'CALL_119' }, tick(600));
+    const r = evaluateEvents(s.events);
+    const call = s.events.find((e) => e.type === 'call_119')!;
+    const end = s.events.find((e) => e.type === 'scenario_ended')!;
+    expect(r.emergencyCall.confirmed).toMatchObject({ eventId: confirmedAt(s).id, time: confirmedAt(s).time });
+    expect(r.emergencyCall.called).toMatchObject({ eventId: call.id, time: call.time });
+    expect(r.emergencyCall.ended).toMatchObject({ eventId: end.id, time: end.time });
+    expect(rule(r, 'F2').evidence.map((e) => e.eventId)).toEqual([confirmedAt(s).id, call.id, end.id]);
   });
 });
 

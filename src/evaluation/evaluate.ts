@@ -1,7 +1,15 @@
 import { ACTION_LABELS } from '../game/engine';
 import { createInitialState } from '../game/scenario';
 import type { SimEvent } from '../game/types';
-import { CATEGORIES, MIN_ASSESSED_POINTS, RULES, RULES_VERSION, findViolations, type EvalContext } from './rules';
+import {
+  CATEGORIES,
+  MIN_ASSESSED_POINTS,
+  RULES,
+  RULES_VERSION,
+  assessEmergencyCall,
+  findViolations,
+  type EvalContext,
+} from './rules';
 import type {
   CategoryResult,
   EvaluationInput,
@@ -205,6 +213,7 @@ export function evaluateRun(input: EvaluationInput): EvaluationResult {
     improvements,
     undetermined: rules.filter((r) => !isAssessed(r)),
     violations,
+    emergencyCall: assessEmergencyCall(ctx),
     elapsedSeconds: ctx.observedUntil - (ctx.started?.time ?? 0),
     outcome: outcomeOf(ctx),
     complete: ctx.complete,

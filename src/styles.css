@@ -1189,6 +1189,43 @@ button.zone:active {
   color: var(--cyan);
 }
 
+.aar-call {
+  border-left: 3px solid var(--line-strong);
+}
+
+.aar-call.aar-rule--pass {
+  border-left-color: var(--accent);
+}
+
+.aar-call.aar-rule--partial {
+  border-left-color: var(--amber);
+}
+
+.aar-call.aar-rule--fail {
+  border-left-color: var(--red);
+}
+
+.aar-call.aar-rule--undeterminable {
+  border-left-color: var(--violet);
+}
+
+.aar-call__facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5em, 1fr));
+  gap: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.aar-call__facts dt {
+  color: var(--text-dim);
+  font-size: 0.72rem;
+}
+
+.aar-call__facts dd {
+  margin: 0;
+}
+
 .aar-goals {
   margin: 0;
   padding-left: 1.4em;
