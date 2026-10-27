@@ -29,6 +29,25 @@ React + TypeScript + Vite 製のレスポンシブ Web アプリで、MacBook・
 - iPad：モニター・指示の2カラム + ログ
 - iPhone（720px 以下）：下部タブで画面を切替
 
+## 公開（GitHub Pages）
+
+`main` へのマージ（push）で GitHub Actions（`.github/workflows/deploy-pages.yml`）がテスト → ビルド → GitHub Pages へのデプロイを自動実行します。プルリクエストではテストとビルドのみ実行し、公開はしません。
+
+- 公開 URL：https://f48ksf5hgf-art.github.io/NS-SIM/
+- 公開されるのは `dist/`（ビルド済みの HTML / JS / CSS / アイコン）のみです。ソースマップは出力しません。ゲーム内データはすべて架空のものです
+- Vite の `base` は本番ビルド時に `/NS-SIM/`。ルートで配信するホスティングでは `BASE_PATH=/ npm run build` でビルドします
+
+### 初回のみ必要な設定
+
+1. リポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
+2. **Actions** タブで「Deploy to GitHub Pages」を **Run workflow**（または `main` へ push）
+
+> GitHub Free プランでは、非公開（private）リポジトリで GitHub Pages を使えません。リポジトリを公開（public）にするか、GitHub Pro 以上にするか、Cloudflare Pages などの代替ホスティングを使ってください。なお GitHub Pro でも、公開されたサイト自体は URL を知っていれば誰でも閲覧できます。
+
+### iPad / iPhone のホーム画面に追加
+
+Safari で公開 URL を開き、共有ボタン →「ホーム画面に追加」で、アプリのように全画面で起動できます。
+
 ## 開発
 
 ```bash
