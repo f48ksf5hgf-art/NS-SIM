@@ -184,7 +184,7 @@ describe('v0.4 タスクボード・簡易通知', () => {
     const user = setup();
     await start(user);
     const casualtyRow = rows()[0];
-    await user.click(within(casualtyRow).getByRole('button', { name: '完了にする' }));
+    await user.click(within(casualtyRow).getByRole('button', { name: '完了' }));
     const moved = rows()[1];
     expect(moved).toHaveTextContent('完了（手動）');
     expect(moved).toHaveTextContent('事案は未収束の可能性');

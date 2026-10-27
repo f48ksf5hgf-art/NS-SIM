@@ -1933,6 +1933,10 @@ button.aar-evidence__ref {
   text-align: left;
 }
 
+.map .panel__title {
+  white-space: nowrap;
+}
+
 .taskboard__heading {
   font-weight: 700;
   color: var(--accent);
@@ -1987,8 +1991,9 @@ button.aar-evidence__ref {
 
 .task {
   --tc: var(--amber);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
   border-radius: 8px;
   border: 1px solid color-mix(in srgb, var(--tc) 45%, transparent);
   border-left: 4px solid var(--tc);
@@ -2084,14 +2089,16 @@ button.aar-evidence__ref {
 
 .task__tools {
   display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  padding: 0 8px 8px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px 6px 0;
 }
 
 .task__tool {
-  min-height: 34px;
-  padding: 2px 10px;
+  min-height: 30px;
+  padding: 2px 8px;
+  white-space: nowrap;
   border-radius: 6px;
   border: 1px solid var(--line-strong);
   background: transparent;

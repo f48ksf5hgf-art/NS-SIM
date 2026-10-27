@@ -115,7 +115,7 @@ export function TaskBoard({ tasks, time, onOpen, onPriority, onManualDone }: Pro
                           aria-pressed={t.manualDone}
                           onClick={() => onManualDone(t.id, !t.manualDone)}
                         >
-                          {t.manualDone ? '戻す' : '完了にする'}
+                          {t.manualDone ? '戻す' : '完了'}
                         </button>
                       </div>
                     )}
@@ -125,7 +125,7 @@ export function TaskBoard({ tasks, time, onOpen, onPriority, onManualDone }: Pro
             </ol>
           )}
           <p className="taskboard__note">
-            並び順は推奨の目安です（評価の基準ではありません）。「完了にする」は表示の整理のみで、事案の収束や評価は変わりません。
+            並び順は目安（評価基準ではありません）。「完了」は表示の整理のみで、事案の収束・評価は変わりません。
           </p>
         </div>
       )}
