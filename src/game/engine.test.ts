@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { evaluate, formatClock, gameReducer, travelSeconds } from './engine';
+import { evaluateRun } from '../evaluation/evaluate';
+import { formatClock, gameReducer, travelSeconds } from './engine';
 import { SCENARIO, createInitialState } from './scenario';
 import type { GameAction, GameState } from './types';
 
@@ -52,7 +53,7 @@ describe('時間経過', () => {
   it('放置すると延焼拡大で失敗する', () => {
     const s = run(started(), { type: 'TICK', seconds: 1000 });
     expect(s.outcome).toBe('failed');
-    expect(evaluate(s).rank).toBe('D');
+    expect(evaluateRun({ scenarioId: SCENARIO.id, events: s.events }).rank).toBe('D');
   });
 });
 
@@ -93,8 +94,8 @@ describe('警備員への指示', () => {
     expect(s.fire.active).toBe(false);
     expect(s.fire.extinguishedBy).toBe('guard');
     expect(s.outcome).toBe('resolved');
-    const result = evaluate(s);
-    expect(result.score).toBeGreaterThanOrEqual(90);
+    const result = evaluateRun({ scenarioId: SCENARIO.id, events: s.events });
+    expect(result.totalScore).toBeGreaterThanOrEqual(90);
     expect(result.rank).toBe('S');
   });
 

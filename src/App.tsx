@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AfterActionReview } from './components/AfterActionReview';
 import { CommandPanel } from './components/CommandPanel';
 import { EventLog } from './components/EventLog';
 import { FacilityMap } from './components/FacilityMap';
 import { Header } from './components/Header';
-import { Briefing, Result } from './components/Overlays';
+import { Briefing } from './components/Overlays';
+import { evaluateRun } from './evaluation/evaluate';
+import { saveResult, type HistoryEntry } from './evaluation/storage';
 import { ACTIONS_WITH_TARGET } from './game/engine';
-import type { GuardActionType, ZoneId } from './game/types';
+import { SCENARIO } from './game/scenario';
+import type { GuardActionType, SimEvent, ZoneId } from './game/types';
 import { useGame } from './game/useGame';
 
 type Tab = 'map' | 'command' | 'log';
@@ -24,6 +28,26 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('map');
   const [resultClosed, setResultClosed] = useState(false);
   const [seenLogCount, setSeenLogCount] = useState(0);
+  const [history, setHistory] = useState<{ entries: HistoryEntry[]; currentId: string | null; error: string | null }>({
+    entries: [],
+    currentId: null,
+    error: null,
+  });
+  const savedEvents = useRef<SimEvent[] | null>(null);
+
+  // 状況終了時に、記録されたイベント履歴から評価する
+  const result = useMemo(
+    () => (state.outcome ? evaluateRun({ scenarioId: SCENARIO.id, events: state.events }) : null),
+    [state.outcome, state.events],
+  );
+
+  // 1回の訓練につき1度だけ履歴へ保存する
+  useEffect(() => {
+    if (!result || savedEvents.current === state.events) return;
+    savedEvents.current = state.events;
+    const saved = saveResult(result);
+    setHistory({ entries: saved.entries, currentId: saved.ok ? saved.entries[0].id : null, error: saved.error });
+  }, [result, state.events]);
 
   // リセット時に画面上の選択状態も初期化する
   useEffect(() => {
@@ -93,8 +117,20 @@ export default function App() {
       </nav>
 
       {!state.started && <Briefing dispatch={dispatch} />}
-      {state.outcome && !resultClosed && (
-        <Result state={state} dispatch={dispatch} onClose={() => setResultClosed(true)} />
+      {result && !resultClosed && (
+        <AfterActionReview
+          result={result}
+          history={history.entries}
+          currentId={history.currentId}
+          saveError={history.error}
+          onReplay={() => dispatch({ type: 'RESET' })}
+          onClose={() => setResultClosed(true)}
+        />
+      )}
+      {result && resultClosed && (
+        <button type="button" className="btn btn--primary aar-reopen" onClick={() => setResultClosed(false)}>
+          訓練結果を表示
+        </button>
       )}
     </div>
   );

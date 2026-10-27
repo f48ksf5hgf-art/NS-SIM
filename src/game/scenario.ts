@@ -2,6 +2,7 @@ import type { GameState, Guard, Zone, ZoneId } from './types';
 
 /** シナリオ定数 */
 export const SCENARIO = {
+  id: 'scenario-01',
   title: '商業施設 自動火災報知設備 発報',
   facilityName: 'NSショッピングプラザ（架空）',
   startClock: 14 * 3600 + 32 * 60,
@@ -126,6 +127,8 @@ export function createInitialState(): GameState {
     smokeExposure: 0,
     log: [],
     nextLogId: 1,
+    events: [],
+    nextEventId: 1,
     outcome: null,
   };
 }

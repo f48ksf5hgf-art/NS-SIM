@@ -1,7 +1,6 @@
 import type { Dispatch } from 'react';
-import { evaluate } from '../game/engine';
 import { SCENARIO } from '../game/scenario';
-import type { GameAction, GameState } from '../game/types';
+import type { GameAction } from '../game/types';
 
 export function Briefing({ dispatch }: { dispatch: Dispatch<GameAction> }) {
   return (
@@ -23,42 +22,6 @@ export function Briefing({ dispatch }: { dispatch: Dispatch<GameAction> }) {
         </ul>
         <button type="button" className="btn btn--primary btn--block" onClick={() => dispatch({ type: 'START' })}>
           状況開始
-        </button>
-      </div>
-    </div>
-  );
-}
-
-interface ResultProps {
-  state: GameState;
-  dispatch: Dispatch<GameAction>;
-  onClose: () => void;
-}
-
-export function Result({ state, dispatch, onClose }: ResultProps) {
-  const result = evaluate(state);
-  return (
-    <div className="overlay" role="dialog" aria-modal="true" aria-labelledby="result-title">
-      <div className="dialog">
-        <p className="dialog__eyebrow">{state.outcome === 'resolved' ? 'MISSION COMPLETE' : 'MISSION FAILED'}</p>
-        <h2 id="result-title" className="dialog__title">
-          対応評価 <span className={`rank rank--${result.rank}`}>{result.rank}</span>
-        </h2>
-        <p className="score mono">{result.score} / 100</p>
-        <ul className="eval">
-          {result.items.map((item) => (
-            <li key={item.label} className={item.ok ? 'is-ok' : 'is-ng'}>
-              <span className="eval__mark">{item.ok ? '✓' : '✕'}</span>
-              <span className="eval__label">{item.label}</span>
-              <span className="eval__detail">{item.detail}</span>
-            </li>
-          ))}
-        </ul>
-        <button type="button" className="btn btn--primary btn--block" onClick={() => dispatch({ type: 'RESET' })}>
-          もう一度挑戦
-        </button>
-        <button type="button" className="btn btn--ghost btn--block" onClick={onClose}>
-          ログを確認する
         </button>
       </div>
     </div>

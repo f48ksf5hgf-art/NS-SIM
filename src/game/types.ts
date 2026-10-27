@@ -63,6 +63,50 @@ export interface LogEntry {
   message: string;
 }
 
+/**
+ * 評価用の構造化イベント。時系列ログ（表示用の文章）とは別に、判断・状況変化を機械可読な形で記録する。
+ * 評価エンジンはこの履歴のみを入力として採点する。
+ */
+export type SimEventBody =
+  | { type: 'scenario_started'; scenarioId: string }
+  | { type: 'alarm'; zoneId: ZoneId; stage: 1 | 2 }
+  | {
+      type: 'command';
+      guardId: string;
+      action: GuardActionType;
+      target: LocationId | null;
+      travelSeconds: number;
+      /** 実行中の任務を上書きした場合、その任務種別 */
+      replaced: GuardActionType | null;
+    }
+  | { type: 'call_119' }
+  | { type: 'announcement' }
+  | { type: 'fire_confirmed'; guardId: string; zoneId: ZoneId; intensity: number }
+  | { type: 'smoke_confirmed'; guardId: string; zoneId: ZoneId }
+  | { type: 'zone_clear'; guardId: string; zoneId: ZoneId }
+  | { type: 'extinguish_succeeded'; guardId: string }
+  | { type: 'extinguish_failed'; guardId: string; intensity: number }
+  | { type: 'fire_danger'; intensity: number }
+  | { type: 'guard_idle'; guardId: string; location: LocationId }
+  | { type: 'zone_evacuated'; zoneId: ZoneId }
+  | { type: 'fire_dept_arrived' }
+  | { type: 'fire_dept_extinguished' }
+  | {
+      type: 'scenario_ended';
+      outcome: 'resolved' | 'failed';
+      extinguishedBy: 'guard' | 'fire_department' | null;
+      smokeExposure: number;
+      zones: { id: ZoneId; occupants: number; initialOccupants: number; smoke: boolean }[];
+    };
+
+export type SimEvent = SimEventBody & {
+  id: number;
+  /** 経過秒数 */
+  time: number;
+  /** 同時に記録された時系列ログの ID */
+  logId: number | null;
+};
+
 export type Speed = 1 | 2 | 4;
 
 export type Outcome = 'resolved' | 'failed' | null;
@@ -87,6 +131,8 @@ export interface GameState {
   smokeExposure: number;
   log: LogEntry[];
   nextLogId: number;
+  events: SimEvent[];
+  nextEventId: number;
   outcome: Outcome;
 }
 
