@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { gameReducer } from '../game/engine';
 import { SCENARIO, createInitialState } from '../game/scenario';
 import type { GameAction } from '../game/types';
+import { createScenario, runReferencePlay } from '../sim/bot';
 import { evaluateRun } from './evaluate';
+import { evaluateGeneratedRun } from './generated/evaluate';
 import {
   HISTORY_KEY,
   HISTORY_LIMIT,
@@ -112,5 +114,51 @@ describe('履歴保存に失敗した場合', () => {
     const storage = memoryStorage();
     storage.setItem(HISTORY_KEY, JSON.stringify([{ id: 1 }, { id: 'x', savedAt: at(0).toISOString(), result: good }]));
     expect(loadHistory(storage).entries.map((e) => e.id)).toEqual(['x']);
+  });
+});
+
+describe('v0.3：ランダム生成シナリオの履歴と互換性', () => {
+  const genResult = (difficulty: 'easy' | 'hard', seed: number) => {
+    const spec = createScenario(difficulty, seed);
+    return evaluateGeneratedRun(spec, runReferencePlay(spec).events);
+  };
+
+  it('v0.2.1 形式の保存データ（シナリオ01）をそのまま読み込み、新しい結果を追加できる', () => {
+    const storage = memoryStorage();
+    const legacy = [{ id: 'legacy', savedAt: at(0).toISOString(), result: good }];
+    storage.setItem(HISTORY_KEY, JSON.stringify(legacy));
+    const res = saveResult(genResult('easy', 1), { storage, now: at(1), id: 'gen' });
+    expect(res.ok).toBe(true);
+    expect(res.entries.map((e) => e.id)).toEqual(['gen', 'legacy']);
+    expect(loadHistory(storage).entries[1].result).toEqual(good);
+  });
+
+  it('難易度・シード・施設規模・評価ルールのバージョンを履歴に保存する', () => {
+    const storage = memoryStorage();
+    const r = genResult('hard', 42);
+    saveResult(r, { storage, now: at(0), id: 'h' });
+    const saved = JSON.parse(storage.data.get(HISTORY_KEY)!)[0].result;
+    expect(saved).toMatchObject({
+      difficulty: 'hard',
+      seed: 42,
+      rulesVersion: 'generated/1.0.0',
+      facilitySize: r.facilitySize,
+    });
+  });
+
+  it('異なる難易度・シナリオ01の得点とは比較しない', () => {
+    const storage = memoryStorage();
+    saveResult(good, { storage, now: at(0), id: 'classic' });
+    saveResult(genResult('easy', 1), { storage, now: at(1), id: 'easy' });
+    const hard = genResult('hard', 2);
+    const { entries } = saveResult(hard, { storage, now: at(2), id: 'hard' });
+    expect(compareWithHistory(hard, entries, 'hard')).toBeNull();
+    expect(compareWithHistory(good, entries, 'classic')).toBeNull();
+    const hard2 = genResult('hard', 2);
+    const after = saveResult(hard2, { storage, now: at(3), id: 'hard2' }).entries;
+    const cmp = compareWithHistory(hard2, after, 'hard2')!;
+    expect(cmp.previous.id).toBe('hard');
+    expect(cmp.sameSeed).toBe(true);
+    expect(cmp.attempts).toBe(2);
   });
 });

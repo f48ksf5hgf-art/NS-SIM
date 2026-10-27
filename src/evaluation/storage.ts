@@ -3,7 +3,7 @@
  * 保存するのは評価結果（架空のシナリオ・架空の隊員名・得点・根拠）のみで、
  * 利用者の氏名などの個人情報や実在施設の情報は扱わない。
  */
-import type { CategoryId, EvaluationResult } from './types';
+import { isGeneratedResult, type AnyEvaluationResult, type CategoryId } from './types';
 
 export const HISTORY_KEY = 'ns-sim:aar-history:v1';
 export const HISTORY_LIMIT = 20;
@@ -12,7 +12,16 @@ export interface HistoryEntry {
   id: string;
   /** 保存日時（ISO 8601） */
   savedAt: string;
-  result: EvaluationResult;
+  /**
+   * 評価結果。v0.3 のランダム生成シナリオは難易度・シード・施設規模・評価ルールのバージョンを含む。
+   * v0.2.1 以前の結果（シナリオ01）はそのまま読み込める。
+   */
+  result: AnyEvaluationResult;
+}
+
+/** 比較してよい結果のまとまり（同じシナリオ・同じ難易度）。難易度の異なる得点は比較しない */
+export function comparisonKey(result: AnyEvaluationResult): string {
+  return isGeneratedResult(result) ? `${result.scenarioId}|${result.difficulty}` : `${result.scenarioId}|classic`;
 }
 
 /** localStorage と同じ形のストレージ（テストでは差し替える） */
@@ -69,7 +78,7 @@ export function loadHistory(storage: KeyValueStorage | null = browserStorage()):
 
 /** 評価結果を先頭に追加し、直近 HISTORY_LIMIT 件だけを保存する */
 export function saveResult(
-  result: EvaluationResult,
+  result: AnyEvaluationResult,
   options: { storage?: KeyValueStorage | null; now?: Date; id?: string } = {},
 ): SaveResult {
   const storage = options.storage === undefined ? browserStorage() : options.storage;
@@ -95,13 +104,14 @@ export function saveResult(
   }
 }
 
-/** 同じシナリオの直前の結果（current 自身は除く） */
+/** 同じシナリオ・同じ難易度の直前の結果（current 自身は除く） */
 export function previousResult(
   entries: HistoryEntry[],
-  scenarioId: string,
+  result: AnyEvaluationResult,
   currentId: string | null,
 ): HistoryEntry | null {
-  return entries.find((e) => e.id !== currentId && e.result.scenarioId === scenarioId) ?? null;
+  const key = comparisonKey(result);
+  return entries.find((e) => e.id !== currentId && comparisonKey(e.result) === key) ?? null;
 }
 
 export interface Comparison {
@@ -112,16 +122,19 @@ export interface Comparison {
   versionMismatch: boolean;
   bestScore: number;
   attempts: number;
+  /** ランダム生成シナリオで、前回と同じシード（同じ施設・事件）か */
+  sameSeed: boolean | null;
 }
 
 export function compareWithHistory(
-  result: EvaluationResult,
+  result: AnyEvaluationResult,
   entries: HistoryEntry[],
   currentId: string | null,
 ): Comparison | null {
-  const previous = previousResult(entries, result.scenarioId, currentId);
+  const previous = previousResult(entries, result, currentId);
   if (!previous) return null;
-  const sameScenario = entries.filter((e) => e.result.scenarioId === result.scenarioId);
+  const key = comparisonKey(result);
+  const sameScenario = entries.filter((e) => comparisonKey(e.result) === key);
   const categoryDiffs = {} as Record<CategoryId, number | null>;
   for (const c of result.categories) {
     const p = previous.result.categories.find((x) => x.id === c.id);
@@ -134,5 +147,7 @@ export function compareWithHistory(
     versionMismatch: previous.result.rulesVersion !== result.rulesVersion,
     bestScore: Math.max(result.totalScore, ...sameScenario.map((e) => e.result.totalScore)),
     attempts: sameScenario.length + (sameScenario.some((e) => e.id === currentId) ? 0 : 1),
+    sameSeed:
+      isGeneratedResult(result) && isGeneratedResult(previous.result) ? previous.result.seed === result.seed : null,
   };
 }

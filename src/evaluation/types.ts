@@ -1,4 +1,5 @@
 import type { SimEvent } from '../game/types';
+import type { Difficulty, IncidentKind } from '../sim/types';
 
 export type CategoryId = 'safety' | 'initial' | 'command' | 'information' | 'resolution';
 
@@ -130,4 +131,32 @@ export interface EvaluationResult {
 export interface EvaluationInput {
   scenarioId: string;
   events: SimEvent[];
+}
+
+// ---------------------------------------------------------------------------
+// v0.3 ランダム生成シナリオ
+
+/** 100点の総合評価とは別に表示する補助指標（0〜100、算出できなければ null） */
+export interface Indicator {
+  value: number | null;
+  detail: string;
+}
+
+export interface GeneratedEvaluationResult extends Omit<EvaluationResult, 'emergencyCall' | 'outcome'> {
+  mode: 'generated';
+  difficulty: Difficulty;
+  seed: number;
+  facilityName: string;
+  facilitySize: { floors: number; zones: number; guards: number };
+  /** Easy〜Hard：適応型、Expert：安全管理を共通基準とするハイブリッド型 */
+  evaluationMode: 'adaptive' | 'hybrid';
+  outcome: 'resolved' | 'failed' | 'timeout' | 'unknown';
+  incidents: { id: string; kind: IncidentKind; status: string; genuine: boolean; label: string }[];
+  indicators: { efficiency: Indicator; safety: Indicator };
+}
+
+export type AnyEvaluationResult = EvaluationResult | GeneratedEvaluationResult;
+
+export function isGeneratedResult(r: AnyEvaluationResult): r is GeneratedEvaluationResult {
+  return (r as GeneratedEvaluationResult).mode === 'generated';
 }

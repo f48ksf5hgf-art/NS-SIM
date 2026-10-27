@@ -1,6 +1,7 @@
 import { formatClock, formatElapsed } from '../game/engine';
 import { SCENARIO } from '../game/scenario';
 import { OUTCOME_LABELS } from '../evaluation/evaluate';
+import { outcomeLabel } from '../evaluation/labels';
 import { compareWithHistory, type HistoryEntry } from '../evaluation/storage';
 import { CALL_TIERS } from '../evaluation/rules';
 import type {
@@ -380,7 +381,7 @@ export function AfterActionReview({ result, history, currentId, saveError, onRep
                     <span className="aar-history__scenario">{h.result.scenarioId}</span>
                     <span className="mono">{h.result.totalScore}点</span>
                     <span className="mono">{h.result.rank ?? '保留'}</span>
-                    <span className="aar-history__outcome">{OUTCOME_LABELS[h.result.outcome]}</span>
+                    <span className="aar-history__outcome">{outcomeLabel(h.result)}</span>
                   </li>
                 ))}
               </ol>
