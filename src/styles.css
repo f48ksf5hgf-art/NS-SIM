@@ -889,6 +889,7 @@ button.zone:active {
 
 .aar__meta dt {
   color: var(--text-dim);
+  white-space: nowrap;
 }
 
 .aar__meta dd {
@@ -1324,6 +1325,400 @@ button.zone:active {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
+/* ---------- v0.3：モード選択・難易度 ---------- */
+.mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mode-switch__btn {
+  min-height: var(--tap);
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.mode-switch__btn + .mode-switch__btn {
+  border-left: 1px solid var(--line-strong);
+}
+
+.mode-switch__btn.is-active {
+  background: rgba(76, 201, 240, 0.14);
+  color: var(--cyan);
+}
+
+.difficulty-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.difficulty {
+  --dc: var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: var(--tap);
+  padding: 10px 12px;
+  text-align: left;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+}
+
+.difficulty--normal {
+  --dc: var(--cyan);
+}
+.difficulty--hard {
+  --dc: var(--amber);
+}
+.difficulty--expert {
+  --dc: var(--red);
+}
+
+.difficulty.is-selected {
+  border-color: var(--dc);
+  background: color-mix(in srgb, var(--dc) 12%, var(--panel));
+}
+
+.difficulty__name {
+  font-family: var(--mono);
+  font-weight: 700;
+  color: var(--dc);
+}
+
+.difficulty__desc {
+  font-size: 0.78rem;
+}
+
+.difficulty__meta {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.seed-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.seed-field__input {
+  min-height: var(--tap);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--text);
+  /* iOS Safari のフォーカス時ズームを防ぐため 16px 以上 */
+  font-size: 16px;
+}
+
+.seed-field__input[aria-invalid='true'] {
+  border-color: var(--red);
+}
+
+.seed-field__error {
+  color: var(--red);
+}
+
+.dialog__sub {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.dialog__incident {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-right: 8px;
+  color: var(--amber);
+}
+
+/* ---------- v0.3：事案表示 ---------- */
+.incident-icon {
+  flex: none;
+  vertical-align: -2px;
+}
+
+.incident-board {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.incident-board__empty {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px dashed var(--line-strong);
+  color: var(--text-dim);
+  font-size: 0.82rem;
+}
+
+.incident-board__item {
+  --ic: var(--amber);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--ic) 50%, transparent);
+  background: color-mix(in srgb, var(--ic) 10%, var(--panel));
+  color: var(--ic);
+  font-size: 0.85rem;
+}
+
+.incident-board__item--danger {
+  --ic: var(--red);
+}
+
+.incident-board__item--ok {
+  --ic: var(--accent);
+}
+
+.incident-board__item.is-new {
+  animation: pulse-amber 0.8s ease-in-out infinite;
+}
+
+.incident-board__title {
+  font-weight: 700;
+}
+
+.incident-board__status {
+  color: var(--text);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.zone--casualty {
+  --zc: #ff7aa8;
+  animation: pulse-red 1.2s ease-in-out infinite;
+}
+
+.zone--damage {
+  --zc: var(--amber);
+}
+
+.zone--unchecked {
+  --zc: var(--text-dim);
+  border-style: dashed;
+}
+
+.zone.is-new {
+  box-shadow: 0 0 0 2px var(--amber), 0 0 18px rgba(245, 185, 66, 0.55);
+}
+
+.zone__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.zone__stair {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.legend__item--damage {
+  --zc: var(--amber);
+}
+
+.command__warning {
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 90, 78, 0.6);
+  background: rgba(255, 90, 78, 0.12);
+  color: var(--red);
+  font-size: 0.82rem;
+}
+
+.actions--floor {
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.actions__floor {
+  min-width: 2.6em;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+/* ---------- v0.3：AAR タブ ---------- */
+.aar-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.aar-tabs__tab {
+  position: relative;
+  min-height: var(--tap);
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.aar-tabs__tab.is-active {
+  background: rgba(76, 201, 240, 0.14);
+  color: var(--cyan);
+}
+
+.aar-tabs__count {
+  display: inline-block;
+  min-width: 18px;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--amber);
+  color: #1a1204;
+  font-size: 0.7rem;
+  line-height: 18px;
+}
+
+button.aar-evidence__ref {
+  min-height: 28px;
+  padding: 0 6px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 40%, transparent);
+  background: rgba(76, 201, 240, 0.08);
+  color: var(--cyan);
+  font-size: 0.74rem;
+}
+
+.aar-rule__priority {
+  margin-right: 4px;
+  color: var(--amber);
+}
+
+.aar-rule__goal {
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.aar-indicators {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+}
+
+.aar-indicators div {
+  display: flex;
+  flex-direction: column;
+}
+
+.aar-indicators dt {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.aar-indicators dd {
+  margin: 0;
+}
+
+.aar-indicators dd.mono {
+  font-size: 1.6rem;
+  color: var(--cyan);
+}
+
+.aar-indicators__detail {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.aar-incidents {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aar-incidents__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--amber);
+}
+
+.aar-incidents__item.is-resolved {
+  color: var(--accent);
+}
+
+.aar-incidents__item.is-failed {
+  color: var(--red);
+}
+
+.aar-incidents__item span {
+  color: var(--text);
+}
+
+.aar-incidents__status {
+  font-size: 0.75rem;
+}
+
+.aar-timeline--full {
+  max-height: none;
+}
+
+.aar-timeline__item:focus {
+  outline: none;
+}
+
+.aar-timeline__item.is-target {
+  background: rgba(76, 201, 240, 0.16);
+  box-shadow: inset 0 0 0 2px var(--cyan);
+}
+
+.aar-timeline__refs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.aar-timeline__ref {
+  padding: 0 5px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  color: var(--amber);
+  font-size: 0.68rem;
+}
+
+.aar-history li.is-other {
+  opacity: 0.55;
+}
+
+.aar__actions--many {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 /* ---------- Animations ---------- */
 @keyframes blink {
   to {
@@ -1517,6 +1912,29 @@ button.zone:active {
     bottom: calc(72px + env(safe-area-inset-bottom));
   }
 
+  .difficulty-list,
+  .aar-indicators {
+    grid-template-columns: 1fr;
+  }
+
+  .global-actions--sim {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .global-actions--sim .btn {
+    font-size: 0.78rem;
+    padding: 6px 8px;
+  }
+
+  .aar__actions--many {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .aar__actions--many .btn {
+    min-height: 40px;
+    font-size: 0.8rem;
+  }
+
   .tabbar__badge {
     position: absolute;
     top: 4px;
@@ -1529,5 +1947,25 @@ button.zone:active {
     color: #fff;
     font-size: 0.68rem;
     line-height: 18px;
+  }
+}
+
+/* ---------- 小型スマートフォン（iPhone SE など 360px 以下） ---------- */
+@media (max-width: 360px) {
+  .header__controls {
+    gap: 6px;
+  }
+
+  .header__controls .btn {
+    padding: 6px 8px;
+  }
+
+  .status-pill {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .speed__btn {
+    min-width: 34px;
   }
 }

@@ -10,7 +10,7 @@ const CATEGORY_LABELS: Record<LogCategory, string> = {
   success: '完了',
 };
 
-export function EventLog({ state }: { state: GameState }) {
+export function EventLog({ state }: { state: Pick<GameState, 'log' | 'startClock'> }) {
   const entries = [...state.log].reverse();
   return (
     <section className="panel log" aria-labelledby="log-title">
