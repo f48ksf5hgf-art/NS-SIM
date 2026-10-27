@@ -1,0 +1,9488 @@
+{
+ "ideal": {
+  "time": 110,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ初期消火（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 5,
+    "time": 0,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 6,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：1F フードコートへ避難誘導（移動 約30秒）"
+   },
+   {
+    "id": 7,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備3：B1F 駐車場へ避難誘導（移動 約0秒）"
+   },
+   {
+    "id": 8,
+    "time": 0,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 9,
+    "time": 3,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 10,
+    "time": 4,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 11,
+    "time": 4,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）の避難誘導完了」"
+   },
+   {
+    "id": 12,
+    "time": 30,
+    "category": "report",
+    "message": "警備2「B区域（1F フードコート）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 13,
+    "time": 40,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 14,
+    "time": 43,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 15,
+    "time": 43,
+    "category": "report",
+    "message": "警備2「B区域（1F フードコート）の避難誘導完了」"
+   },
+   {
+    "id": 16,
+    "time": 54,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 17,
+    "time": 70,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢25%」"
+   },
+   {
+    "id": 18,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「消火器による初期消火を開始」"
+   },
+   {
+    "id": 19,
+    "time": 80,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 20,
+    "time": 110,
+    "category": "success",
+    "message": "警備1「初期消火に成功。鎮火を確認」"
+   },
+   {
+    "id": 21,
+    "time": 110,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 100,
+   "rank": "S",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 88,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 25,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 14,
+     "assessedMax": 14
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 9,
+     "assessedMax": 9
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 10,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認の報告より前に通報",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から70秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 6,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 7,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災確認の報告から状況終了までが120秒以内のため判定対象外",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "第2報・初期消火不能・火勢拡大のいずれも発生しなかった",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "警備員の初期消火により鎮火",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響を受けた区域なし",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認の報告より前に通報",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から70秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 6,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 7,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "警備員の初期消火により鎮火",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響を受けた区域なし",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [],
+   "undetermined": [
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災確認の報告から状況終了までが120秒以内のため判定対象外",
+     "evidence": [
+      {
+       "eventId": 15,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "第2報・初期消火不能・火勢拡大のいずれも発生しなかった",
+     "evidence": []
+    }
+   ],
+   "violations": [],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 15,
+     "time": 70,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 4,
+     "time": 0,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 19,
+     "time": 110,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": true,
+    "observedSeconds": 40,
+    "status": "pass",
+    "points": 10,
+    "detail": "火災確認の報告より前に通報",
+    "evidence": [
+     {
+      "eventId": 15,
+      "time": 70,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 4,
+      "time": 0,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 19,
+      "time": 110,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "before_confirmation",
+    "delaySeconds": 0
+   },
+   "elapsedSeconds": 110,
+   "outcome": "extinguished_by_guard",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：初期消火"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 5,
+     "time": 0,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 6,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → B区域：避難誘導"
+    },
+    {
+     "eventId": 7,
+     "time": 0,
+     "kind": "command",
+     "text": "警備3 鈴木 → F区域：避難誘導"
+    },
+    {
+     "eventId": 8,
+     "time": 3,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 9,
+     "time": 4,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 11,
+     "time": 40,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 12,
+     "time": 43,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 14,
+     "time": 54,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 15,
+     "time": 70,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢25%）"
+    },
+    {
+     "eventId": 16,
+     "time": 80,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 17,
+     "time": 110,
+     "kind": "success",
+     "text": "警備1 田中が初期消火に成功"
+    },
+    {
+     "eventId": 19,
+     "time": 110,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "同水準の対応を維持し、×2・×4の速度でも同じ判断ができるようにする"
+   ]
+  }
+ },
+ "investigateThenAct": {
+  "time": 451,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：1F フードコートへ避難誘導（移動 約30秒）"
+   },
+   {
+    "id": 5,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備3：B1F 駐車場へ避難誘導（移動 約0秒）"
+   },
+   {
+    "id": 6,
+    "time": 0,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 7,
+    "time": 6,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 8,
+    "time": 6,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）の避難誘導完了」"
+   },
+   {
+    "id": 9,
+    "time": 30,
+    "category": "report",
+    "message": "警備2「B区域（1F フードコート）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 10,
+    "time": 64,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 11,
+    "time": 64,
+    "category": "report",
+    "message": "警備2「B区域（1F フードコート）の避難誘導完了」"
+   },
+   {
+    "id": 12,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 13,
+    "time": 90,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢28%」"
+   },
+   {
+    "id": 14,
+    "time": 91,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 15,
+    "time": 91,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 16,
+    "time": 94,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 17,
+    "time": 131,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 18,
+    "time": 145,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 19,
+    "time": 171,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 20,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 21,
+    "time": 391,
+    "category": "system",
+    "message": "消防隊 現着。消火活動を開始"
+   },
+   {
+    "id": 22,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 23,
+    "time": 451,
+    "category": "success",
+    "message": "消防隊により鎮火"
+   },
+   {
+    "id": 24,
+    "time": 451,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 94,
+   "rank": "S",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 25,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 14,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 15,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 10,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 20,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認から1秒後に通報",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 12,
+       "time": 91,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備3 鈴木 361秒",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 7,
+       "time": 6,
+       "note": "警備3 鈴木 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 2件中 2件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 18,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 20,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 20,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認から1秒後に通報",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 12,
+       "time": 91,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 2件中 2件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 18,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 20,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 451,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備3 鈴木 361秒",
+     "evidence": [
+      {
+       "eventId": 10,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 7,
+       "time": 6,
+       "note": "警備3 鈴木 待機開始"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 10,
+     "time": 90,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 12,
+     "time": 91,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 22,
+     "time": 451,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 361,
+    "status": "pass",
+    "points": 10,
+    "detail": "火災確認から1秒後に通報",
+    "evidence": [
+     {
+      "eventId": 10,
+      "time": 90,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 12,
+      "time": 91,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 22,
+      "time": 451,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "on_time",
+    "delaySeconds": 1
+   },
+   "elapsedSeconds": 451,
+   "outcome": "extinguished_by_fire_department",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：現場確認"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → B区域：避難誘導"
+    },
+    {
+     "eventId": 5,
+     "time": 0,
+     "kind": "command",
+     "text": "警備3 鈴木 → F区域：避難誘導"
+    },
+    {
+     "eventId": 6,
+     "time": 6,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 8,
+     "time": 64,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 10,
+     "time": 90,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢28%）"
+    },
+    {
+     "eventId": 12,
+     "time": 91,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 13,
+     "time": 91,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 14,
+     "time": 94,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 15,
+     "time": 131,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 16,
+     "time": 145,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 17,
+     "time": 171,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 18,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 19,
+     "time": 391,
+     "kind": "system",
+     "text": "消防隊 現着"
+    },
+    {
+     "eventId": 20,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 21,
+     "time": 451,
+     "kind": "success",
+     "text": "消防隊により鎮火"
+    },
+    {
+     "eventId": 22,
+     "time": 451,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "火災判断後は隊員を2分以上待機させたままにしない"
+   ]
+  }
+ },
+ "idle": {
+  "time": 567,
+  "outcome": "failed",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 4,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 5,
+    "time": 567,
+    "category": "danger",
+    "message": "延焼拡大。警備員による対応の限界を超えました（状況終了）"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 0,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 67,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 0,
+     "assessedMax": 18
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 0,
+     "assessedMax": 15
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 0,
+     "assessedMax": 14
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 0,
+     "assessedMax": 10
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 0,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（第2報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ61,488人・秒",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "fail",
+     "points": 0,
+     "detail": "任務を与えた隊員 0名",
+     "evidence": []
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 366秒",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 4,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [],
+   "improvements": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（第2報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ61,488人・秒",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "fail",
+     "points": 0,
+     "detail": "任務を与えた隊員 0名",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 366秒",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 4,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "undetermined": [
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    }
+   ],
+   "violations": [
+    {
+     "violationId": "V2",
+     "title": "避難措置の重大な遅れ",
+     "detail": "第2報から180秒以上、非常放送・避難誘導のいずれも行われなかった",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "violationId": "V3",
+     "title": "119番通報の重大な遅れ",
+     "detail": "第2報から180秒以上、119番通報が行われなかった",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": null,
+    "called": null,
+    "ended": {
+     "eventId": 5,
+     "time": 567,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": null,
+    "status": "not_applicable",
+    "points": 0,
+    "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+    "evidence": [
+     {
+      "eventId": 5,
+      "time": 567,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "not_required",
+    "delaySeconds": null
+   },
+   "elapsedSeconds": 567,
+   "outcome": "fire_spread",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 4,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 5,
+     "time": 567,
+     "kind": "system",
+     "text": "状況終了：延焼拡大"
+    }
+   ],
+   "nextGoals": [
+    "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "第1報から30秒以内に発報区域へ隊員を派遣する"
+   ]
+  }
+ },
+ "extinguishNoCall": {
+  "time": 110,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ初期消火（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 5,
+    "time": 3,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 6,
+    "time": 12,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 7,
+    "time": 40,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 8,
+    "time": 54,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 9,
+    "time": 70,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢25%」"
+   },
+   {
+    "id": 10,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「消火器による初期消火を開始」"
+   },
+   {
+    "id": 11,
+    "time": 70,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 12,
+    "time": 80,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 13,
+    "time": 110,
+    "category": "success",
+    "message": "警備1「初期消火に成功。鎮火を確認」"
+   },
+   {
+    "id": 14,
+    "time": 110,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 82,
+   "rank": "C",
+   "rankCapped": true,
+   "rankNote": "重大な安全違反があるため、ランクの上限をCとしました",
+   "assessedMax": 88,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 15,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 8,
+     "assessedMax": 14
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 9,
+     "assessedMax": 9
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 10,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで40秒、通報なし（初期消火に成功しても通報は必要）",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から70秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災確認の報告から状況終了までが120秒以内のため判定対象外",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "第2報・初期消火不能・火勢拡大のいずれも発生しなかった",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "警備員の初期消火により鎮火",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響を受けた区域なし",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から70秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "警備員の初期消火により鎮火",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響を受けた区域なし",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで40秒、通報なし（初期消火に成功しても通報は必要）",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    }
+   ],
+   "undetermined": [
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災確認の報告から状況終了までが120秒以内のため判定対象外",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "第2報・初期消火不能・火勢拡大のいずれも発生しなかった",
+     "evidence": []
+    }
+   ],
+   "violations": [
+    {
+     "violationId": "V3",
+     "title": "火災確認後の119番通報の未実施",
+     "detail": "火災確認から状況終了まで40秒、119番通報が行われなかった（初期消火の成功で通報が不要になるわけではない）",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 70,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 14,
+       "time": 110,
+       "note": "状況終了"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 9,
+     "time": 70,
+     "note": "火災確認の報告"
+    },
+    "called": null,
+    "ended": {
+     "eventId": 14,
+     "time": 110,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": true,
+    "observedSeconds": 40,
+    "status": "fail",
+    "points": 0,
+    "detail": "通報未実施：火災確認から状況終了まで40秒、通報なし（初期消火に成功しても通報は必要）",
+    "evidence": [
+     {
+      "eventId": 9,
+      "time": 70,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 14,
+      "time": 110,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "not_called",
+    "delaySeconds": null
+   },
+   "elapsedSeconds": 110,
+   "outcome": "extinguished_by_guard",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：初期消火"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 5,
+     "time": 3,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 6,
+     "time": 12,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 7,
+     "time": 40,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 8,
+     "time": 54,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 9,
+     "time": 70,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢25%）"
+    },
+    {
+     "eventId": 10,
+     "time": 70,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 11,
+     "time": 80,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 12,
+     "time": 110,
+     "kind": "success",
+     "text": "警備1 田中が初期消火に成功"
+    },
+    {
+     "eventId": 14,
+     "time": 110,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える"
+   ]
+  }
+ },
+ "lateInvestigate": {
+  "time": 360,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 5,
+    "time": 3,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 6,
+    "time": 12,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 7,
+    "time": 40,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 8,
+    "time": 54,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 9,
+    "time": 70,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 10,
+    "time": 80,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 11,
+    "time": 150,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 12,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 13,
+    "time": 220,
+    "category": "report",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 14,
+    "time": 240,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢51%」"
+   },
+   {
+    "id": 15,
+    "time": 300,
+    "category": "system",
+    "message": "消防隊 現着。消火活動を開始"
+   },
+   {
+    "id": 16,
+    "time": 360,
+    "category": "success",
+    "message": "消防隊により鎮火"
+   },
+   {
+    "id": 17,
+    "time": 360,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 79,
+   "rank": "B",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 13,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 11,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 15,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 10,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：第2報より前に実施",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "partial",
+     "points": 2,
+     "detail": "D区域への派遣指示：第1報から150秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 11,
+       "time": 150,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認の報告より前に通報",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "partial",
+     "points": 1,
+     "detail": "D区域からの報告：第1報から240秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 150,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "partial",
+     "points": 3,
+     "detail": "火災判断後の最長待機：警備2 佐藤 159秒",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 1件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：第2報より前に実施",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "危険区域への不適切な進入指示なし",
+     "evidence": []
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認の報告より前に通報",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 1件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "partial",
+     "points": 2,
+     "detail": "D区域への派遣指示：第1報から150秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 11,
+       "time": 150,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 150,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "partial",
+     "points": 1,
+     "detail": "D区域からの報告：第1報から240秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 13,
+       "time": 240,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "partial",
+     "points": 3,
+     "detail": "火災判断後の最長待機：警備2 佐藤 159秒",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 13,
+     "time": 240,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 3,
+     "time": 0,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 17,
+     "time": 360,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 120,
+    "status": "pass",
+    "points": 10,
+    "detail": "火災確認の報告より前に通報",
+    "evidence": [
+     {
+      "eventId": 13,
+      "time": 240,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 3,
+      "time": 0,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 17,
+      "time": 360,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "before_confirmation",
+    "delaySeconds": 0
+   },
+   "elapsedSeconds": 360,
+   "outcome": "extinguished_by_fire_department",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 5,
+     "time": 3,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 6,
+     "time": 12,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 7,
+     "time": 40,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 8,
+     "time": 54,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 9,
+     "time": 70,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 10,
+     "time": 80,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 11,
+     "time": 150,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：現場確認"
+    },
+    {
+     "eventId": 12,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 13,
+     "time": 240,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢51%）"
+    },
+    {
+     "eventId": 15,
+     "time": 300,
+     "kind": "system",
+     "text": "消防隊 現着"
+    },
+    {
+     "eventId": 16,
+     "time": 360,
+     "kind": "success",
+     "text": "消防隊により鎮火"
+    },
+    {
+     "eventId": 17,
+     "time": 360,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "第1報から30秒以内に発報区域へ隊員を派遣する",
+    "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+    "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る"
+   ]
+  }
+ },
+ "dangerousReentry": {
+  "time": 460,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 5,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：2F 物販エリアへ避難誘導（移動 約70秒）"
+   },
+   {
+    "id": 6,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備3：B1F 駐車場へ避難誘導（移動 約0秒）"
+   },
+   {
+    "id": 7,
+    "time": 0,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 8,
+    "time": 3,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 9,
+    "time": 4,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 10,
+    "time": 4,
+    "category": "report",
+    "message": "警備3「F区域（B1F 駐車場）の避難誘導完了」"
+   },
+   {
+    "id": 11,
+    "time": 40,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 12,
+    "time": 54,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 13,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 14,
+    "time": 70,
+    "category": "report",
+    "message": "警備2「C区域（2F 物販エリア）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 15,
+    "time": 70,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 16,
+    "time": 80,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 17,
+    "time": 90,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢28%」"
+   },
+   {
+    "id": 18,
+    "time": 100,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 19,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 20,
+    "time": 240,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ初期消火（移動 約0秒）"
+   },
+   {
+    "id": 21,
+    "time": 240,
+    "category": "report",
+    "message": "警備1「消火器による初期消火を開始」"
+   },
+   {
+    "id": 22,
+    "time": 280,
+    "category": "danger",
+    "message": "警備1「火勢が強く初期消火不能。区域外へ退避します」"
+   },
+   {
+    "id": 23,
+    "time": 281,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ初期消火（移動 約0秒）"
+   },
+   {
+    "id": 24,
+    "time": 281,
+    "category": "report",
+    "message": "警備1「消火器による初期消火を開始」"
+   },
+   {
+    "id": 25,
+    "time": 321,
+    "category": "danger",
+    "message": "警備1「火勢が強く初期消火不能。区域外へ退避します」"
+   },
+   {
+    "id": 26,
+    "time": 400,
+    "category": "system",
+    "message": "消防隊 現着。消火活動を開始"
+   },
+   {
+    "id": 27,
+    "time": 460,
+    "category": "success",
+    "message": "消防隊により鎮火"
+   },
+   {
+    "id": 28,
+    "time": 460,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 82,
+   "rank": "C",
+   "rankCapped": true,
+   "rankNote": "重大な安全違反があるため、ランクの上限をCとしました",
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 18,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 25,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 14,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 15,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 10,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "fail",
+     "points": 0,
+     "detail": "退避判断後の進入指示 1件",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 280,
+       "note": "初期消火不能の報告"
+      },
+      {
+       "eventId": 21,
+       "time": 281,
+       "note": "進入指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認から10秒後に通報",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 16,
+       "time": 100,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 6,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備3 鈴木 370秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 9,
+       "time": 4,
+       "note": "警備3 鈴木 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 3件中 3件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 19,
+       "time": 280,
+       "note": "初期消火不能：60秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 22,
+       "time": 321,
+       "note": "初期消火不能：60秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 3件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告より前に実施",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "火災確認から10秒後に通報",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 16,
+       "time": 100,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "pass",
+     "points": 8,
+     "detail": "任務を与えた隊員 3名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 6,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "pass",
+     "points": 6,
+     "detail": "状況変化 3件中 3件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 17,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 19,
+       "time": 280,
+       "note": "初期消火不能：60秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 22,
+       "time": 321,
+       "note": "初期消火不能：60秒以内に必要な措置あり"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 3件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "煙の影響区域の残留者 0/168名",
+     "evidence": [
+      {
+       "eventId": 26,
+       "time": 460,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "fail",
+     "points": 0,
+     "detail": "退避判断後の進入指示 1件",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 280,
+       "note": "初期消火不能の報告"
+      },
+      {
+       "eventId": 21,
+       "time": 281,
+       "note": "進入指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備3 鈴木 370秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 9,
+       "time": 4,
+       "note": "警備3 鈴木 待機開始"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [
+    {
+     "violationId": "V1",
+     "title": "退避判断後の火災区域への進入指示",
+     "detail": "初期消火不能の情報を受けた後、警備1 田中を火災区域（D区域）へ進入させた",
+     "evidence": [
+      {
+       "eventId": 19,
+       "time": 280,
+       "note": "初期消火不能の報告"
+      },
+      {
+       "eventId": 21,
+       "time": 281,
+       "note": "進入指示"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 14,
+     "time": 90,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 16,
+     "time": 100,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 26,
+     "time": 460,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 370,
+    "status": "pass",
+    "points": 10,
+    "detail": "火災確認から10秒後に通報",
+    "evidence": [
+     {
+      "eventId": 14,
+      "time": 90,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 16,
+      "time": 100,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 26,
+      "time": 460,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "on_time",
+    "delaySeconds": 10
+   },
+   "elapsedSeconds": 460,
+   "outcome": "extinguished_by_fire_department",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：現場確認"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 5,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → C区域：避難誘導"
+    },
+    {
+     "eventId": 6,
+     "time": 0,
+     "kind": "command",
+     "text": "警備3 鈴木 → F区域：避難誘導"
+    },
+    {
+     "eventId": 7,
+     "time": 3,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 8,
+     "time": 4,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 10,
+     "time": 40,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 11,
+     "time": 54,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 12,
+     "time": 70,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 13,
+     "time": 80,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 14,
+     "time": 90,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢28%）"
+    },
+    {
+     "eventId": 16,
+     "time": 100,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 17,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 18,
+     "time": 240,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：初期消火"
+    },
+    {
+     "eventId": 19,
+     "time": 280,
+     "kind": "danger",
+     "text": "警備1 田中：初期消火不能（火勢51%）"
+    },
+    {
+     "eventId": 21,
+     "time": 281,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：初期消火"
+    },
+    {
+     "eventId": 22,
+     "time": 321,
+     "kind": "danger",
+     "text": "警備1 田中：初期消火不能（火勢51%）"
+    },
+    {
+     "eventId": 24,
+     "time": 400,
+     "kind": "system",
+     "text": "消防隊 現着"
+    },
+    {
+     "eventId": 25,
+     "time": 460,
+     "kind": "success",
+     "text": "消防隊により鎮火"
+    },
+    {
+     "eventId": 26,
+     "time": 460,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+    "火災判断後は隊員を2分以上待機させたままにしない"
+   ]
+  }
+ },
+ "callDelay100": {
+  "time": 550,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 5,
+    "time": 90,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢28%」"
+   },
+   {
+    "id": 6,
+    "time": 190,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 7,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 8,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 9,
+    "time": 490,
+    "category": "system",
+    "message": "消防隊 現着。消火活動を開始"
+   },
+   {
+    "id": 10,
+    "time": 550,
+    "category": "success",
+    "message": "消防隊により鎮火"
+   },
+   {
+    "id": 11,
+    "time": 550,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 56,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 12,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 21,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 8,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 9,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 6,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（火災確認の報告から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ58,800人・秒",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "partial",
+     "points": 6,
+     "detail": "通報遅延：火災確認から100秒後に通報（基準60秒以内）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 6,
+       "time": 190,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 460秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙の影響区域の残留者 168/168名",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（火災確認の報告から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ58,800人・秒",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 460秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "partial",
+     "points": 6,
+     "detail": "通報遅延：火災確認から100秒後に通報（基準60秒以内）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 6,
+       "time": 190,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙の影響区域の残留者 168/168名",
+     "evidence": [
+      {
+       "eventId": 11,
+       "time": 550,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [
+    {
+     "violationId": "V2",
+     "title": "避難措置の重大な遅れ",
+     "detail": "火災確認の報告から180秒以上、非常放送・避難誘導のいずれも行われなかった",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 4,
+     "time": 90,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 6,
+     "time": 190,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 11,
+     "time": 550,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 460,
+    "status": "partial",
+    "points": 6,
+    "detail": "通報遅延：火災確認から100秒後に通報（基準60秒以内）",
+    "evidence": [
+     {
+      "eventId": 4,
+      "time": 90,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 6,
+      "time": 190,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 11,
+      "time": 550,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "delayed",
+    "delaySeconds": 100
+   },
+   "elapsedSeconds": 550,
+   "outcome": "extinguished_by_fire_department",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：現場確認"
+    },
+    {
+     "eventId": 4,
+     "time": 90,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢28%）"
+    },
+    {
+     "eventId": 6,
+     "time": 190,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 7,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 8,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 9,
+     "time": 490,
+     "kind": "system",
+     "text": "消防隊 現着"
+    },
+    {
+     "eventId": 10,
+     "time": 550,
+     "kind": "success",
+     "text": "消防隊により鎮火"
+    },
+    {
+     "eventId": 11,
+     "time": 550,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+    "煙が流入する前に在館者の避難を完了させる",
+    "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える"
+   ]
+  }
+ },
+ "callDelay300": {
+  "time": 567,
+  "outcome": "failed",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 4,
+    "time": 70,
+    "category": "report",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 5,
+    "time": 90,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢28%」"
+   },
+   {
+    "id": 6,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 7,
+    "time": 390,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 8,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 9,
+    "time": 567,
+    "category": "danger",
+    "message": "延焼拡大。警備員による対応の限界を超えました（状況終了）"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 45,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 12,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 16,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 8,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 9,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 0,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（火災確認の報告から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ61,488人・秒",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "partial",
+     "points": 1,
+     "detail": "通報遅延：火災確認から300秒後に通報（基準60秒以内）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 7,
+       "time": 390,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 477秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（火災確認の報告から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "partial",
+     "points": 1,
+     "detail": "通報遅延：火災確認から300秒後に通報（基準60秒以内）",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 7,
+       "time": 390,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ61,488人・秒",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 477秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 2件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [
+    {
+     "violationId": "V2",
+     "title": "避難措置の重大な遅れ",
+     "detail": "火災確認の報告から180秒以上、非常放送・避難誘導のいずれも行われなかった",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "violationId": "V3",
+     "title": "119番通報の重大な遅れ",
+     "detail": "火災確認の報告から180秒以上、119番通報が行われなかった",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 7,
+       "time": 390,
+       "note": "119番通報"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 4,
+     "time": 90,
+     "note": "火災確認の報告"
+    },
+    "called": {
+     "eventId": 7,
+     "time": 390,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 9,
+     "time": 567,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 477,
+    "status": "partial",
+    "points": 1,
+    "detail": "通報遅延：火災確認から300秒後に通報（基準60秒以内）",
+    "evidence": [
+     {
+      "eventId": 4,
+      "time": 90,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 7,
+      "time": 390,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 9,
+      "time": 567,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "delayed",
+    "delaySeconds": 300
+   },
+   "elapsedSeconds": 567,
+   "outcome": "fire_spread",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：現場確認"
+    },
+    {
+     "eventId": 4,
+     "time": 90,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢28%）"
+    },
+    {
+     "eventId": 6,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 7,
+     "time": 390,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 8,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 9,
+     "time": 567,
+     "kind": "system",
+     "text": "状況終了：延焼拡大"
+    }
+   ],
+   "nextGoals": [
+    "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "煙が流入する前に在館者の避難を完了させる"
+   ]
+  }
+ },
+ "wrongZoneAndOverrides": {
+  "time": 567,
+  "outcome": "failed",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：3F シネマへ現場確認（移動 約110秒）"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：2F 倉庫・バックヤードへ現場確認（移動 約70秒）"
+   },
+   {
+    "id": 5,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備3：1F 正面エントランスへ初期消火（移動 約110秒）"
+   },
+   {
+    "id": 6,
+    "time": 70,
+    "category": "report",
+    "message": "警備2「D区域（2F 倉庫・バックヤード）に到着、確認中」"
+   },
+   {
+    "id": 7,
+    "time": 90,
+    "category": "danger",
+    "message": "警備2「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢28%」"
+   },
+   {
+    "id": 8,
+    "time": 110,
+    "category": "report",
+    "message": "警備3「A区域（1F 正面エントランス）に火源なし」"
+   },
+   {
+    "id": 9,
+    "time": 120,
+    "category": "command",
+    "message": "指令→警備1：その場で待機"
+   },
+   {
+    "id": 10,
+    "time": 120,
+    "category": "command",
+    "message": "指令→警備3：防災センターへ防災センターへ帰隊（移動 約30秒）"
+   },
+   {
+    "id": 11,
+    "time": 120,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 12,
+    "time": 123,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 13,
+    "time": 132,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 14,
+    "time": 150,
+    "category": "report",
+    "message": "警備3「防災センターに到着、待機します」"
+   },
+   {
+    "id": 15,
+    "time": 160,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 16,
+    "time": 174,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 17,
+    "time": 190,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 18,
+    "time": 200,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 19,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 20,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 21,
+    "time": 567,
+    "category": "danger",
+    "message": "延焼拡大。警備員による対応の限界を超えました（状況終了）"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 67,
+   "rank": "C",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 15,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 11,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 7,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 4,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告から30秒後",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 13,
+       "time": 120,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで477秒、通報なし",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 5,
+     "detail": "任務を与えた隊員 2名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 1回",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤の任務上書き"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 477秒",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "partial",
+     "points": 3,
+     "detail": "状況変化 2件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 21,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 22,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "発報・煙の情報がない区域への派遣 2件",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "E区域への派遣（情報なし）"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "A区域への派遣（情報なし）"
+      }
+     ]
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "全館の残留者 0/773名",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：火災確認の報告から30秒後",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 13,
+       "time": 120,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 22,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "pass",
+     "points": 10,
+     "detail": "D区域への派遣指示：第1報より前に実施",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "pass",
+     "points": 5,
+     "detail": "D区域からの報告：第1報から90秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 1回",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤の任務上書き"
+      }
+     ]
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "全館の残留者 0/773名",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで477秒、通報なし",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 477秒",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 23,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "発報・煙の情報がない区域への派遣 2件",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "E区域への派遣（情報なし）"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "A区域への派遣（情報なし）"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 5,
+     "detail": "任務を与えた隊員 2名",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      },
+      {
+       "eventId": 5,
+       "time": 0,
+       "note": "警備3 鈴木への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "partial",
+     "points": 3,
+     "detail": "状況変化 2件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 21,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 22,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [
+    {
+     "violationId": "V3",
+     "title": "119番通報の重大な遅れ",
+     "detail": "火災確認の報告から180秒以上、119番通報が行われなかった",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 90,
+       "note": "火災確認の報告"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 6,
+     "time": 90,
+     "note": "火災確認の報告"
+    },
+    "called": null,
+    "ended": {
+     "eventId": 23,
+     "time": 567,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 477,
+    "status": "fail",
+    "points": 0,
+    "detail": "通報未実施：火災確認から状況終了まで477秒、通報なし",
+    "evidence": [
+     {
+      "eventId": 6,
+      "time": 90,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 23,
+      "time": 567,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "not_called",
+    "delaySeconds": null
+   },
+   "elapsedSeconds": 567,
+   "outcome": "fire_spread",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → E区域：現場確認"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → D区域：現場確認"
+    },
+    {
+     "eventId": 5,
+     "time": 0,
+     "kind": "command",
+     "text": "警備3 鈴木 → A区域：初期消火"
+    },
+    {
+     "eventId": 6,
+     "time": 90,
+     "kind": "danger",
+     "text": "警備2 佐藤がD区域の火災を確認（火勢28%）"
+    },
+    {
+     "eventId": 8,
+     "time": 110,
+     "kind": "report",
+     "text": "警備3 鈴木：A区域 異常なし"
+    },
+    {
+     "eventId": 10,
+     "time": 120,
+     "kind": "command",
+     "text": "警備1 田中 → その場：待機（指示解除）"
+    },
+    {
+     "eventId": 12,
+     "time": 120,
+     "kind": "command",
+     "text": "警備3 鈴木 → 防災センター：防災センターへ帰隊"
+    },
+    {
+     "eventId": 13,
+     "time": 120,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 14,
+     "time": 123,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 15,
+     "time": 132,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 17,
+     "time": 160,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 18,
+     "time": 174,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 19,
+     "time": 190,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 20,
+     "time": 200,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 21,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 22,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 23,
+     "time": 567,
+     "kind": "system",
+     "text": "状況終了：延焼拡大"
+    }
+   ],
+   "nextGoals": [
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "火災判断後は隊員を2分以上待機させたままにしない",
+    "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ"
+   ]
+  }
+ },
+ "fireDepartmentOnly": {
+  "time": 360,
+  "outcome": "resolved",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令：119番通報を実施（消防隊到着予定 約5分）"
+   },
+   {
+    "id": 4,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 5,
+    "time": 300,
+    "category": "system",
+    "message": "消防隊 現着。消火活動を開始"
+   },
+   {
+    "id": 6,
+    "time": 360,
+    "category": "success",
+    "message": "消防隊により鎮火"
+   },
+   {
+    "id": 7,
+    "time": 360,
+    "category": "system",
+    "message": "状況終了：火災は鎮火しました"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 28,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 67,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 0,
+     "assessedMax": 8
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 10,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 3,
+     "assessedMax": 14
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 0,
+     "assessedMax": 10
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 6,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "undeterminable",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし。判定期限（+06:21）前に状況終了",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ26,880人・秒",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "現場での火災確認より前に通報",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "fail",
+     "points": 0,
+     "detail": "任務を与えた隊員 0名",
+     "evidence": []
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "partial",
+     "points": 3,
+     "detail": "火災判断後の最長待機：警備1 田中 159秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 1件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙の影響区域の残留者 168/168名",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "pass",
+     "points": 10,
+     "detail": "現場での火災確認より前に通報",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "119番通報"
+      },
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "pass",
+     "points": 6,
+     "detail": "消防隊により鎮火",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ26,880人・秒",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "fail",
+     "points": 0,
+     "detail": "任務を与えた隊員 0名",
+     "evidence": []
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 1件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙の影響区域の残留者 168/168名",
+     "evidence": [
+      {
+       "eventId": 7,
+       "time": 360,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "partial",
+     "points": 3,
+     "detail": "火災判断後の最長待機：警備1 田中 159秒",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    }
+   ],
+   "undetermined": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "undeterminable",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし。判定期限（+06:21）前に状況終了",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "警備員への指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    }
+   ],
+   "violations": [],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": null,
+    "called": {
+     "eventId": 3,
+     "time": 0,
+     "note": "119番通報"
+    },
+    "ended": {
+     "eventId": 7,
+     "time": 360,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": null,
+    "status": "pass",
+    "points": 10,
+    "detail": "現場での火災確認より前に通報",
+    "evidence": [
+     {
+      "eventId": 3,
+      "time": 0,
+      "note": "119番通報"
+     },
+     {
+      "eventId": 7,
+      "time": 360,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "before_confirmation",
+    "delaySeconds": 0
+   },
+   "elapsedSeconds": 360,
+   "outcome": "extinguished_by_fire_department",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "119番通報"
+    },
+    {
+     "eventId": 4,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 5,
+     "time": 300,
+     "kind": "system",
+     "text": "消防隊 現着"
+    },
+    {
+     "eventId": 6,
+     "time": 360,
+     "kind": "success",
+     "text": "消防隊により鎮火"
+    },
+    {
+     "eventId": 7,
+     "time": 360,
+     "kind": "system",
+     "text": "状況終了：鎮火"
+    }
+   ],
+   "nextGoals": [
+    "第1報から30秒以内に発報区域へ隊員を派遣する",
+    "煙が流入する前に在館者の避難を完了させる",
+    "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える"
+   ]
+  }
+ },
+ "evacuateOnly": {
+  "time": 567,
+  "outcome": "failed",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 0,
+    "category": "command",
+    "message": "指令：非常放送により全館避難を指示"
+   },
+   {
+    "id": 4,
+    "time": 0,
+    "category": "command",
+    "message": "指令→警備2：1F 正面エントランスへ避難誘導（移動 約0秒）"
+   },
+   {
+    "id": 5,
+    "time": 0,
+    "category": "report",
+    "message": "警備2「A区域（1F 正面エントランス）に到着、避難誘導を開始」"
+   },
+   {
+    "id": 6,
+    "time": 3,
+    "category": "success",
+    "message": "D区域（2F 倉庫・バックヤード） 避難完了"
+   },
+   {
+    "id": 7,
+    "time": 12,
+    "category": "success",
+    "message": "F区域（B1F 駐車場） 避難完了"
+   },
+   {
+    "id": 8,
+    "time": 14,
+    "category": "success",
+    "message": "A区域（1F 正面エントランス） 避難完了"
+   },
+   {
+    "id": 9,
+    "time": 14,
+    "category": "report",
+    "message": "警備2「A区域（1F 正面エントランス）の避難誘導完了」"
+   },
+   {
+    "id": 10,
+    "time": 54,
+    "category": "success",
+    "message": "C区域（2F 物販エリア） 避難完了"
+   },
+   {
+    "id": 11,
+    "time": 70,
+    "category": "success",
+    "message": "B区域（1F フードコート） 避難完了"
+   },
+   {
+    "id": 12,
+    "time": 80,
+    "category": "success",
+    "message": "E区域（3F シネマ） 避難完了"
+   },
+   {
+    "id": 13,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 14,
+    "time": 434,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 15,
+    "time": 567,
+    "category": "danger",
+    "message": "延焼拡大。警備員による対応の限界を超えました（状況終了）"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 53,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 85,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 30,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 0,
+     "assessedMax": 15
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 8,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 3,
+     "assessedMax": 10
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 4,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：第2報より前に実施",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 366秒",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "partial",
+     "points": 3,
+     "detail": "状況変化 2件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 13,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "全館の残留者 0/773名",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "pass",
+     "points": 10,
+     "detail": "最初の避難措置：第2報より前に実施",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 3,
+       "time": 0,
+       "note": "最初の避難措置"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "pass",
+     "points": 8,
+     "detail": "煙にさらされた在館者 延べ0人・秒",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 13,
+       "time": 434,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "pass",
+     "points": 4,
+     "detail": "全館の残留者 0/773名",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示の記録なし（第1報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 0,
+       "note": "警備2 佐藤への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備1 田中 366秒",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備1 田中 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告の記録なし（第1報から300秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      }
+     ]
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況終了まで火災の現場確認なし",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "partial",
+     "points": 3,
+     "detail": "状況変化 2件中 1件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置あり"
+      },
+      {
+       "eventId": 13,
+       "time": 434,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    }
+   ],
+   "undetermined": [
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+     "evidence": [
+      {
+       "eventId": 14,
+       "time": 567,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "not_applicable",
+     "points": 0,
+     "detail": "現場確認・初期消火の指示がない",
+     "evidence": []
+    }
+   ],
+   "violations": [
+    {
+     "violationId": "V3",
+     "title": "119番通報の重大な遅れ",
+     "detail": "第2報から180秒以上、119番通報が行われなかった",
+     "evidence": [
+      {
+       "eventId": 12,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": null,
+    "called": null,
+    "ended": {
+     "eventId": 14,
+     "time": 567,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": null,
+    "status": "not_applicable",
+    "points": 0,
+    "detail": "火災が確認されていないため、通報の有無だけでは評価しない",
+    "evidence": [
+     {
+      "eventId": 14,
+      "time": 567,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "not_required",
+    "delaySeconds": null
+   },
+   "elapsedSeconds": 567,
+   "outcome": "fire_spread",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 0,
+     "kind": "command",
+     "text": "非常放送（全館避難）"
+    },
+    {
+     "eventId": 4,
+     "time": 0,
+     "kind": "command",
+     "text": "警備2 佐藤 → A区域：避難誘導"
+    },
+    {
+     "eventId": 5,
+     "time": 3,
+     "kind": "success",
+     "text": "D区域 避難完了"
+    },
+    {
+     "eventId": 6,
+     "time": 12,
+     "kind": "success",
+     "text": "F区域 避難完了"
+    },
+    {
+     "eventId": 7,
+     "time": 14,
+     "kind": "success",
+     "text": "A区域 避難完了"
+    },
+    {
+     "eventId": 9,
+     "time": 54,
+     "kind": "success",
+     "text": "C区域 避難完了"
+    },
+    {
+     "eventId": 10,
+     "time": 70,
+     "kind": "success",
+     "text": "B区域 避難完了"
+    },
+    {
+     "eventId": 11,
+     "time": 80,
+     "kind": "success",
+     "text": "E区域 避難完了"
+    },
+    {
+     "eventId": 12,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 13,
+     "time": 434,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 14,
+     "time": 567,
+     "kind": "system",
+     "text": "状況終了：延焼拡大"
+    }
+   ],
+   "nextGoals": [
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "第1報から30秒以内に発報区域へ隊員を派遣する",
+    "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える"
+   ]
+  }
+ },
+ "extinguishTooLate": {
+  "time": 607,
+  "outcome": "failed",
+  "log": [
+   {
+    "id": 1,
+    "time": 0,
+    "category": "system",
+    "message": "状況開始：商業施設 自動火災報知設備 発報"
+   },
+   {
+    "id": 2,
+    "time": 0,
+    "category": "alarm",
+    "message": "受信盤：D区域（2F 倉庫・バックヤード） 自動火災報知設備 発報（第1報）"
+   },
+   {
+    "id": 3,
+    "time": 201,
+    "category": "alarm",
+    "message": "受信盤：C区域（2F 物販エリア） 煙感知器 発報（第2報）"
+   },
+   {
+    "id": 4,
+    "time": 250,
+    "category": "command",
+    "message": "指令→警備1：2F 倉庫・バックヤードへ初期消火（移動 約70秒）"
+   },
+   {
+    "id": 5,
+    "time": 320,
+    "category": "danger",
+    "message": "警備1「D区域（2F 倉庫・バックヤード）にて火災を確認。段ボール集積場所から出火、火勢63%」"
+   },
+   {
+    "id": 6,
+    "time": 320,
+    "category": "report",
+    "message": "警備1「消火器による初期消火を開始」"
+   },
+   {
+    "id": 7,
+    "time": 360,
+    "category": "danger",
+    "message": "警備1「火勢が強く初期消火不能。区域外へ退避します」"
+   },
+   {
+    "id": 8,
+    "time": 474,
+    "category": "danger",
+    "message": "防火シャッター付近まで煙が拡大。火勢が増しています"
+   },
+   {
+    "id": 9,
+    "time": 607,
+    "category": "danger",
+    "message": "延焼拡大。警備員による対応の限界を超えました（状況終了）"
+   }
+  ],
+  "result": {
+   "scenarioId": "scenario-01",
+   "rulesVersion": "scenario-01/1.1.0",
+   "totalScore": 29,
+   "rank": "D",
+   "rankCapped": false,
+   "rankNote": null,
+   "assessedMax": 100,
+   "categories": [
+    {
+     "id": "safety",
+     "label": "安全管理",
+     "maxPoints": 30,
+     "earned": 12,
+     "assessedMax": 30
+    },
+    {
+     "id": "initial",
+     "label": "初動対応",
+     "maxPoints": 25,
+     "earned": 0,
+     "assessedMax": 25
+    },
+    {
+     "id": "command",
+     "label": "指揮統制",
+     "maxPoints": 20,
+     "earned": 8,
+     "assessedMax": 20
+    },
+    {
+     "id": "information",
+     "label": "情報管理",
+     "maxPoints": 15,
+     "earned": 9,
+     "assessedMax": 15
+    },
+    {
+     "id": "resolution",
+     "label": "事態収束",
+     "maxPoints": 10,
+     "earned": 0,
+     "assessedMax": 10
+    }
+   ],
+   "rules": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（第2報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ68,208人・秒",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 360,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示：第1報から250秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 250,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで287秒、通報なし",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告：第1報から320秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 250,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 406秒",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 3件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 6,
+       "time": 360,
+       "note": "初期消火不能：60秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 474,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "火災確認の報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "goodDecisions": [
+    {
+     "ruleId": "S3",
+     "category": "safety",
+     "title": "警備員の安全確保",
+     "maxPoints": 12,
+     "goal": "初期消火不能・火勢拡大の情報を受けたら、火災区域へ隊員を進入させない",
+     "status": "pass",
+     "points": 12,
+     "detail": "退避が必要な情報の後、火災区域への進入指示なし",
+     "evidence": [
+      {
+       "eventId": 6,
+       "time": 360,
+       "note": "退避が必要な情報"
+      }
+     ]
+    },
+    {
+     "ruleId": "C2",
+     "category": "command",
+     "title": "指示の一貫性",
+     "maxPoints": 6,
+     "goal": "実行中の任務の上書きを減らし、指示を出す前に優先順位を決める",
+     "status": "pass",
+     "points": 6,
+     "detail": "実行中の任務を別任務で上書き 0回",
+     "evidence": []
+    },
+    {
+     "ruleId": "I2",
+     "category": "information",
+     "title": "情報に基づく派遣先の選択",
+     "maxPoints": 5,
+     "goal": "発報・煙の情報がある区域を優先して確認する",
+     "status": "pass",
+     "points": 5,
+     "detail": "派遣 1件すべて情報のある区域",
+     "evidence": []
+    },
+    {
+     "ruleId": "I3",
+     "category": "information",
+     "title": "火災の現場確認",
+     "maxPoints": 4,
+     "goal": "感知器の発報だけで判断せず、隊員による現場確認で火災を確定させる",
+     "status": "pass",
+     "points": 4,
+     "detail": "隊員が火災を現場確認",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "火災確認の報告"
+      }
+     ]
+    }
+   ],
+   "improvements": [
+    {
+     "ruleId": "S1",
+     "category": "safety",
+     "title": "在館者の避難開始",
+     "maxPoints": 10,
+     "goal": "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+     "status": "fail",
+     "points": 0,
+     "detail": "最初の避難措置の記録なし（第2報から180秒以上経過）",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "ruleId": "F1",
+     "category": "initial",
+     "title": "発報区域への現場確認指示",
+     "maxPoints": 10,
+     "goal": "第1報から30秒以内に発報区域へ隊員を派遣する",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域への派遣指示：第1報から250秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 4,
+       "time": 250,
+       "note": "D区域への派遣指示"
+      }
+     ]
+    },
+    {
+     "ruleId": "F2",
+     "category": "initial",
+     "title": "119番通報",
+     "maxPoints": 10,
+     "goal": "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+     "status": "fail",
+     "points": 0,
+     "detail": "通報未実施：火災確認から状況終了まで287秒、通報なし",
+     "evidence": [
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "火災確認の報告"
+      },
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "S2",
+     "category": "safety",
+     "title": "在館者の煙曝露の抑制",
+     "maxPoints": 8,
+     "goal": "煙が流入する前に在館者の避難を完了させる",
+     "status": "fail",
+     "points": 0,
+     "detail": "煙にさらされた在館者 延べ68,208人・秒",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了時の集計"
+      }
+     ]
+    },
+    {
+     "ruleId": "C1",
+     "category": "command",
+     "title": "隊員の役割分担",
+     "maxPoints": 8,
+     "goal": "確認・消火・避難誘導に隊員を分担させ、3名全員に任務を与える",
+     "status": "partial",
+     "points": 2,
+     "detail": "任務を与えた隊員 1名",
+     "evidence": [
+      {
+       "eventId": 4,
+       "time": 250,
+       "note": "警備1 田中への最初の任務"
+      }
+     ]
+    },
+    {
+     "ruleId": "C3",
+     "category": "command",
+     "title": "待機隊員の活用",
+     "maxPoints": 6,
+     "goal": "火災判断後は隊員を2分以上待機させたままにしない",
+     "status": "fail",
+     "points": 0,
+     "detail": "火災判断後の最長待機：警備2 佐藤 406秒",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      },
+      {
+       "eventId": 1,
+       "time": 0,
+       "note": "警備2 佐藤 待機開始"
+      }
+     ]
+    },
+    {
+     "ruleId": "I1",
+     "category": "information",
+     "title": "状況変化への対応",
+     "maxPoints": 6,
+     "goal": "第2報・初期消火不能・火勢拡大の情報を受けたら、避難措置と119番通報が済んでいるか直ちに確認する",
+     "status": "fail",
+     "points": 0,
+     "detail": "状況変化 3件中 0件に適切に対応",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報：90秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 6,
+       "time": 360,
+       "note": "初期消火不能：60秒以内に必要な措置なし"
+      },
+      {
+       "eventId": 8,
+       "time": 474,
+       "note": "火勢拡大：60秒以内に必要な措置なし"
+      }
+     ]
+    },
+    {
+     "ruleId": "R1",
+     "category": "resolution",
+     "title": "火災の鎮圧",
+     "maxPoints": 6,
+     "goal": "初期消火が可能な段階で消火に着手するか、早期の119番通報で消防隊に引き継ぐ",
+     "status": "fail",
+     "points": 0,
+     "detail": "延焼拡大により状況終了",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了"
+      }
+     ]
+    },
+    {
+     "ruleId": "F3",
+     "category": "initial",
+     "title": "発報区域からの第一報告",
+     "maxPoints": 5,
+     "goal": "発報区域に近い隊員を選び、第1報から2分以内に現場の状況報告を得る",
+     "status": "fail",
+     "points": 0,
+     "detail": "D区域からの報告：第1報から320秒後",
+     "evidence": [
+      {
+       "eventId": 2,
+       "time": 0,
+       "note": "第1報"
+      },
+      {
+       "eventId": 5,
+       "time": 320,
+       "note": "D区域からの報告"
+      }
+     ]
+    },
+    {
+     "ruleId": "R2",
+     "category": "resolution",
+     "title": "終了時の在館者の安全",
+     "maxPoints": 4,
+     "goal": "状況終了時に、煙の影響を受けた区域に在館者を残さない",
+     "status": "fail",
+     "points": 0,
+     "detail": "全館の残留者 773/773名",
+     "evidence": [
+      {
+       "eventId": 9,
+       "time": 607,
+       "note": "状況終了時の集計"
+      }
+     ]
+    }
+   ],
+   "undetermined": [],
+   "violations": [
+    {
+     "violationId": "V2",
+     "title": "避難措置の重大な遅れ",
+     "detail": "第2報から180秒以上、非常放送・避難誘導のいずれも行われなかった",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    },
+    {
+     "violationId": "V3",
+     "title": "119番通報の重大な遅れ",
+     "detail": "第2報から180秒以上、119番通報が行われなかった",
+     "evidence": [
+      {
+       "eventId": 3,
+       "time": 201,
+       "note": "第2報"
+      }
+     ]
+    }
+   ],
+   "emergencyCall": {
+    "maxPoints": 10,
+    "confirmed": {
+     "eventId": 5,
+     "time": 320,
+     "note": "火災確認の報告"
+    },
+    "called": null,
+    "ended": {
+     "eventId": 9,
+     "time": 607,
+     "note": "状況終了"
+    },
+    "extinguishedByGuard": false,
+    "observedSeconds": 287,
+    "status": "fail",
+    "points": 0,
+    "detail": "通報未実施：火災確認から状況終了まで287秒、通報なし",
+    "evidence": [
+     {
+      "eventId": 5,
+      "time": 320,
+      "note": "火災確認の報告"
+     },
+     {
+      "eventId": 9,
+      "time": 607,
+      "note": "状況終了"
+     }
+    ],
+    "verdict": "not_called",
+    "delaySeconds": null
+   },
+   "elapsedSeconds": 607,
+   "outcome": "fire_spread",
+   "complete": true,
+   "timeline": [
+    {
+     "eventId": 1,
+     "time": 0,
+     "kind": "system",
+     "text": "状況開始"
+    },
+    {
+     "eventId": 2,
+     "time": 0,
+     "kind": "alarm",
+     "text": "D区域 発報（第1報）"
+    },
+    {
+     "eventId": 3,
+     "time": 201,
+     "kind": "alarm",
+     "text": "C区域 発報（第2報）"
+    },
+    {
+     "eventId": 4,
+     "time": 250,
+     "kind": "command",
+     "text": "警備1 田中 → D区域：初期消火"
+    },
+    {
+     "eventId": 5,
+     "time": 320,
+     "kind": "danger",
+     "text": "警備1 田中がD区域の火災を確認（火勢63%）"
+    },
+    {
+     "eventId": 6,
+     "time": 360,
+     "kind": "danger",
+     "text": "警備1 田中：初期消火不能（火勢63%）"
+    },
+    {
+     "eventId": 8,
+     "time": 474,
+     "kind": "danger",
+     "text": "火勢拡大（火勢80%）"
+    },
+    {
+     "eventId": 9,
+     "time": 607,
+     "kind": "system",
+     "text": "状況終了：延焼拡大"
+    }
+   ],
+   "nextGoals": [
+    "火災の確認・第2報を受けたら60秒以内に非常放送または避難誘導を開始する",
+    "火災を確認したら、初期消火と並行して60秒以内に119番通報する（初期消火に成功しても通報する）",
+    "第1報から30秒以内に発報区域へ隊員を派遣する"
+   ]
+  }
+ }
+}
