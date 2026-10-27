@@ -1719,6 +1719,199 @@ button.aar-evidence__ref {
   grid-template-columns: repeat(2, 1fr);
 }
 
+/* ---------- v0.4：マップ直接指示（ボトムシート） ---------- */
+.sheet-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 6, 9, 0.55);
+}
+
+.sheet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(500px, calc(100vw - 32px));
+  max-height: 86vh;
+  max-height: 86dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel-2);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  animation: sheet-in 0.18s ease-out;
+}
+
+.sheet__handle {
+  display: none;
+}
+
+.sheet__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.sheet__title {
+  font-size: 1.1rem;
+}
+
+.sheet__title:focus {
+  outline: none;
+}
+
+.sheet__sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.sheet__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(245, 185, 66, 0.14);
+  color: var(--amber);
+  font-weight: 700;
+}
+
+.sheet__close {
+  min-width: var(--tap);
+  min-height: var(--tap);
+}
+
+.sheet__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sheet-guards {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sheet-guard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 8px 10px;
+  text-align: left;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.sheet-guard.is-selected {
+  border-color: var(--cyan);
+  background: rgba(76, 201, 240, 0.1);
+}
+
+.sheet-guard.is-busy .guard__badge {
+  border-style: dashed;
+}
+
+.sheet-guard__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sheet-guard__name {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.sheet-guard__busy {
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 4px;
+  background: rgba(245, 185, 66, 0.16);
+  color: var(--amber);
+  font-size: 0.68rem;
+}
+
+.sheet-guard__meta {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  overflow-wrap: anywhere;
+}
+
+.sheet-guard__eta {
+  font-size: 0.85rem;
+  color: var(--cyan);
+  white-space: nowrap;
+}
+
+.sheet__foot {
+  padding: 10px 16px max(12px, env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+}
+
+.sheet__send {
+  min-height: 52px;
+  font-size: 0.92rem;
+}
+
+.sheet-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(245, 185, 66, 0.55);
+  background: rgba(245, 185, 66, 0.1);
+  font-size: 0.85rem;
+}
+
+.sheet-confirm__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sheet-confirm__actions .btn {
+  min-height: 48px;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(40%);
+    opacity: 0;
+  }
+}
+
 /* ---------- Animations ---------- */
 @keyframes blink {
   to {
@@ -1933,6 +2126,34 @@ button.aar-evidence__ref {
   .aar__actions--many .btn {
     min-height: 40px;
     font-size: 0.8rem;
+  }
+
+  /* iPhone：片手で操作しやすいボトムシート */
+  .sheet {
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transform: none;
+    width: auto;
+    max-height: 82vh;
+    max-height: 82dvh;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+    animation: sheet-up 0.2s ease-out;
+  }
+
+  .sheet__handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 8px auto 0;
+    border-radius: 2px;
+    background: var(--line-strong);
+  }
+
+  .sheet__head {
+    padding-top: 8px;
   }
 
   .tabbar__badge {

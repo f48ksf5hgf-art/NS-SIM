@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useReducer, useState } from 'react';
 import { evaluateGeneratedRun } from '../../evaluation/generated/evaluate';
 import { DIFFICULTIES, DIFFICULTY_DESCRIPTIONS } from '../../sim/difficulty';
-import { SIM_ACTIONS_WITH_TARGET, createSimState, simReducer } from '../../sim/engine';
+import { createSimState, simReducer } from '../../sim/engine';
 import type { ScenarioSpec, SimActionType } from '../../sim/types';
 import { AfterActionReview } from '../AfterActionReview';
+import { CommandSheet } from './CommandSheet';
 import { EventLog } from '../EventLog';
 import { Header } from '../Header';
 import { useResultHistory } from '../useResultHistory';
@@ -82,6 +83,8 @@ export function GeneratedGame({ spec, onNewScenario, onExit }: Props) {
   const [tab, setTab] = useState<Tab>('map');
   const [resultClosed, setResultClosed] = useState(false);
   const [seenLogCount, setSeenLogCount] = useState(0);
+  /** マップ直接指示の対象区域（null なら閉じている） */
+  const [sheetZone, setSheetZone] = useState<string | null>(null);
 
   useEffect(() => {
     if (!state.running) return;
@@ -103,16 +106,22 @@ export function GeneratedGame({ spec, onNewScenario, onExit }: Props) {
       setResultClosed(false);
       setSeenLogCount(0);
       setTab('map');
+      setSheetZone(null);
     }
   }, [state.started]);
+
+  useEffect(() => {
+    if (state.outcome) setSheetZone(null);
+  }, [state.outcome]);
 
   useEffect(() => {
     if (tab === 'log') setSeenLogCount(state.log.length);
   }, [tab, state.log.length]);
 
-  const handleZoneFromMap = (id: string) => {
-    setSelectedZone(id);
-    if (selectedGuardId && selectedAction && SIM_ACTIONS_WITH_TARGET.includes(selectedAction)) setTab('command');
+  // 区域のタップでマップ直接指示を開く（従来の指示画面の区域選択も同期する）
+  const openSheet = (id: string | null) => {
+    if (id) setSelectedZone(id);
+    if (id && state.started && !state.outcome) setSheetZone(id);
   };
 
   const unread = Math.max(0, state.log.length - seenLogCount);
@@ -123,7 +132,7 @@ export function GeneratedGame({ spec, onNewScenario, onExit }: Props) {
 
       <main className="layout" data-tab={tab}>
         <div className="layout__map">
-          <SimMap state={state} selectedZone={selectedZone} onSelectZone={handleZoneFromMap} />
+          <SimMap state={state} selectedZone={selectedZone} onSelectZone={openSheet} />
         </div>
         <div className="layout__command">
           <SimCommandPanel
@@ -158,6 +167,18 @@ export function GeneratedGame({ spec, onNewScenario, onExit }: Props) {
         ))}
       </nav>
 
+      {sheetZone && state.started && !state.outcome && (
+        <CommandSheet
+          state={state}
+          zoneId={sheetZone}
+          dispatch={dispatch}
+          onClose={() => setSheetZone(null)}
+          onSent={() => {
+            setSheetZone(null);
+            setTab('map');
+          }}
+        />
+      )}
       {!state.started && <SimBriefing spec={spec} onStart={() => dispatch({ type: 'START' })} onExit={onExit} />}
       {result && !resultClosed && (
         <AfterActionReview
