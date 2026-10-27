@@ -50,10 +50,10 @@ export const DIFFICULTIES: Record<Difficulty, DifficultyParams> = {
 };
 
 export const DIFFICULTY_DESCRIPTIONS: Record<Difficulty, string> = {
-  easy: '小規模施設・事件1件・発生内容を事前告知',
-  normal: '中規模施設・事件1〜2件',
-  hard: '大規模施設・事件2〜3件（同時発生あり）',
-  expert: '通常勤務から開始・事件は非公開・誤報や誤った通報あり',
+  easy: '小規模施設・事案1件・発生内容を事前告知',
+  normal: '中規模施設・事案1〜2件',
+  hard: '大規模施設・事案2〜3件（同時発生あり）',
+  expert: '通常勤務から開始・事案は非公開・誤報や誤った通報あり',
 };
 
 /** 共通の物理パラメータ（秒） */

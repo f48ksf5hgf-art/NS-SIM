@@ -71,16 +71,17 @@ describe('App', () => {
     const aar = screen.getByRole('dialog', { name: '訓練結果' });
     expect(within(aar).getByTestId('aar-score')).toHaveTextContent(/^\d+$/);
     expect(within(aar).getByTestId('aar-rank')).toHaveTextContent('S');
-    for (const name of [
-      '項目別スコア',
-      '良かった判断',
-      '改善が必要な判断',
-      '重大な安全違反',
-      '主要イベントの時系列',
-      '次回の改善目標',
-    ]) {
-      expect(within(aar).getByRole('heading', { name })).toBeInTheDocument();
+    // v0.3：総合評価・改善点・詳細ログの3タブに分けて表示する
+    const sections: Record<string, string[]> = {
+      総合評価: ['項目別スコア', '重大な安全違反'],
+      改善点: ['良かった判断', '改善が必要な判断', '次回の改善目標'],
+      詳細ログ: ['主要イベントの時系列', '評価根拠一覧'],
+    };
+    for (const [tabName, headings] of Object.entries(sections)) {
+      await user.click(within(aar).getByRole('tab', { name: new RegExp(`^${tabName}`) }));
+      for (const name of headings) expect(within(aar).getByRole('heading', { name })).toBeInTheDocument();
     }
+    await user.click(within(aar).getByRole('tab', { name: '総合評価' }));
     expect(within(aar).getAllByRole('meter')).toHaveLength(5);
     expect(within(aar).getAllByText('鎮火（警備員の初期消火）').length).toBeGreaterThanOrEqual(1);
     expect(within(aar).queryByRole('alert')).not.toBeInTheDocument();

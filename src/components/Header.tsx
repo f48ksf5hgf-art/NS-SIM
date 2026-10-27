@@ -1,10 +1,26 @@
-import type { Dispatch } from 'react';
 import { formatClock, formatElapsed } from '../game/engine';
-import type { GameAction, GameState, Speed } from '../game/types';
+import type { Speed } from '../game/types';
+
+/** シナリオ01・ランダム生成シナリオの両方で使う時計・進行操作 */
+export interface HeaderState {
+  scenarioTitle: string;
+  startClock: number;
+  time: number;
+  started: boolean;
+  running: boolean;
+  speed: Speed;
+  outcome: string | null;
+}
+
+export type HeaderAction =
+  | { type: 'PAUSE' }
+  | { type: 'RESUME' }
+  | { type: 'SET_SPEED'; speed: Speed }
+  | { type: 'RESET' };
 
 interface Props {
-  state: GameState;
-  dispatch: Dispatch<GameAction>;
+  state: HeaderState;
+  dispatch: (action: HeaderAction) => void;
 }
 
 const SPEEDS: Speed[] = [1, 2, 4];
