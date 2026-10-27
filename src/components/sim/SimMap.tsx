@@ -1,4 +1,5 @@
 import { HIGHLIGHT_SECONDS, knownIncidents, zoneMarks, type ZoneMark } from '../../sim/selectors';
+import type { ReactNode } from 'react';
 import { HQ, type SimState } from '../../sim/types';
 import { IncidentIcon } from './IncidentIcon';
 
@@ -6,6 +7,8 @@ interface Props {
   state: SimState;
   selectedZone: string | null;
   onSelectZone: (id: string) => void;
+  /** 上部に表示するボード（v0.4 のタスクボード）。省略時は事案の状況一覧 */
+  board?: ReactNode;
 }
 
 function zoneTone(marks: ZoneMark[], evacuated: boolean): string {
@@ -40,7 +43,7 @@ function Markers({ state, loc }: { state: SimState; loc: string }) {
   );
 }
 
-export function SimMap({ state, selectedZone, onSelectZone }: Props) {
+export function SimMap({ state, selectedZone, onSelectZone, board }: Props) {
   const { facility } = state.spec;
   const incidents = knownIncidents(state);
   const floors = [...facility.floors].reverse();
@@ -57,22 +60,24 @@ export function SimMap({ state, selectedZone, onSelectZone }: Props) {
         </span>
       </div>
 
-      <ul className="incident-board" aria-label="事案の状況" aria-live="polite">
-        {incidents.length === 0 ? (
-          <li className="incident-board__empty">異常なし（通常勤務中）</li>
-        ) : (
-          incidents.map((i) => (
-            <li
-              key={i.id}
-              className={`incident-board__item incident-board__item--${i.tone} ${fresh(i.since) && i.tone !== 'ok' ? 'is-new' : ''}`}
-            >
-              <IncidentIcon kind={i.kind} size={20} />
-              <span className="incident-board__title">{i.title}</span>
-              <span className="incident-board__status">{i.status}</span>
-            </li>
-          ))
-        )}
-      </ul>
+      {board ?? (
+        <ul className="incident-board" aria-label="事案の状況" aria-live="polite">
+          {incidents.length === 0 ? (
+            <li className="incident-board__empty">異常なし（通常勤務中）</li>
+          ) : (
+            incidents.map((i) => (
+              <li
+                key={i.id}
+                className={`incident-board__item incident-board__item--${i.tone} ${fresh(i.since) && i.tone !== 'ok' ? 'is-new' : ''}`}
+              >
+                <IncidentIcon kind={i.kind} size={20} />
+                <span className="incident-board__title">{i.title}</span>
+                <span className="incident-board__status">{i.status}</span>
+              </li>
+            ))
+          )}
+        </ul>
+      )}
 
       <div className="floors">
         {floors.map((floor) => (

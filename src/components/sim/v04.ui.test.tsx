@@ -29,7 +29,9 @@ async function start(user: ReturnType<typeof userEvent.setup>) {
   await user.click(screen.getByRole('button', { name: '一時停止' }));
 }
 
-const zoneButton = (id: string) => screen.getByRole('button', { name: new RegExp(`^${id}区域 `) });
+/** 施設マップ上の区域ボタン（タスクボードの行と区別する） */
+const zoneButton = (id: string) =>
+  within(document.querySelector('.floors') as HTMLElement).getByRole('button', { name: new RegExp(`^${id}区域 `) });
 const logText = () => screen.getByRole('region', { name: '時系列ログ' }).textContent ?? '';
 
 describe('v0.4 マップ直接指示', () => {
@@ -138,5 +140,89 @@ describe('v0.4 マップ直接指示', () => {
     await user.click(within(panel).getByRole('button', { name: new RegExp(`^${fireZone} `) }));
     await user.click(within(panel).getByRole('button', { name: /指示を送信/ }));
     expect(logText()).toContain(`指令→${g1.callSign}`);
+  });
+});
+
+describe('v0.4 タスクボード・簡易通知', () => {
+  beforeEach(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    localStorage.clear();
+  });
+  afterEach(() => vi.useRealTimers());
+
+  const board = () => screen.getByRole('region', { name: 'タスクボード' });
+  const rows = () => within(board()).getAllByRole('listitem');
+
+  it('同時発生した事案がタスクとして推奨順に並び、タップで該当区域の指示へつながる', async () => {
+    const user = setup();
+    await start(user);
+    expect(rows()).toHaveLength(2);
+    // 推奨順（目安）：傷病者通報が未確認の発報より上
+    expect(rows()[0]).toHaveTextContent(`${casualtyZone}区域傷病者通報（未確認）`);
+    expect(rows()[1]).toHaveTextContent(`${fireZone}区域火災発報（未確認）`);
+    expect(rows()[0]).toHaveTextContent('未着手');
+
+    await user.click(within(rows()[1]).getByRole('button', { name: /タップで指示/ }));
+    const sheet = screen.getByRole('dialog', { name: `${fireZone}区域への指示` });
+    await user.click(within(sheet).getByRole('radio', { name: new RegExp(g1.callSign) }));
+    await user.click(within(sheet).getByRole('button', { name: '現場確認' }));
+    await user.click(within(sheet).getByRole('button', { name: new RegExp(`${g1.callSign} →`) }));
+    const fireRow = rows().find((r) => r.textContent!.includes('火災発報'))!;
+    expect(fireRow).toHaveTextContent('対応中');
+    expect(fireRow).toHaveTextContent(`担当：${g1.callSign}`);
+  });
+
+  it('プレイヤーが優先度を変更すると並び順が変わる', async () => {
+    const user = setup();
+    await start(user);
+    await user.click(within(rows()[1]).getByRole('button', { name: /優先度：中/ }));
+    expect(rows()[0]).toHaveTextContent('火災発報');
+    expect(within(rows()[0]).getByRole('button', { name: /優先度：高/ })).toBeInTheDocument();
+  });
+
+  it('手動完了は表示の整理のみで、事案は進行中のまま（戻すこともできる）', async () => {
+    const user = setup();
+    await start(user);
+    const casualtyRow = rows()[0];
+    await user.click(within(casualtyRow).getByRole('button', { name: '完了にする' }));
+    const moved = rows()[1];
+    expect(moved).toHaveTextContent('完了（手動）');
+    expect(moved).toHaveTextContent('事案は未収束の可能性');
+    // 施設マップ上の事案表示は変わらない
+    expect(
+      within(document.querySelector('.floors') as HTMLElement).getByRole('button', {
+        name: new RegExp(`^${casualtyZone}区域 .*傷病者通報`),
+      }),
+    ).toBeInTheDocument();
+    await user.click(within(moved).getByRole('button', { name: '戻す' }));
+    expect(rows()[0]).toHaveTextContent('未着手');
+  });
+
+  it('折りたたむと最上位のタスクだけを1行で表示する', async () => {
+    const user = setup();
+    await start(user);
+    const toggle = within(board()).getByRole('button', { name: /^タスク/ });
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    expect(within(board()).queryAllByRole('listitem')).toHaveLength(0);
+    expect(toggle).toHaveTextContent(`${casualtyZone}区域：傷病者通報（未確認）`);
+  });
+
+  it('発報・通報は緊急の簡易通知になり、タップで閉じ、一定時間で消える', async () => {
+    const user = setup();
+    await user.click(screen.getByRole('button', { name: '状況開始' }));
+    const alerts = within(screen.getByLabelText('通知')).getAllByRole('alert');
+    expect(alerts).toHaveLength(2);
+    expect(alerts.map((a) => a.textContent).join()).toContain('自動火災報知設備 発報');
+    expect(alerts.map((a) => a.textContent).join()).toContain('お客様が倒れている');
+    await user.click(within(alerts[0]).getByRole('button', { name: /タップで閉じる/ }));
+    expect(within(screen.getByLabelText('通知')).getAllByRole('alert')).toHaveLength(1);
+    await user.click(within(screen.getByLabelText('通知')).getByRole('button', { name: 'ログ' }));
+    expect(document.querySelector('.layout')).toHaveAttribute('data-tab', 'log');
+    await act(async () => {
+      vi.advanceTimersByTime(7000);
+    });
+    expect(screen.queryByLabelText('通知')).not.toBeInTheDocument();
   });
 });
